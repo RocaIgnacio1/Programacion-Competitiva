@@ -1,0 +1,12 @@
+function prompt {
+    $currentDirectory = (Get-Location).Path
+    $folders = $currentDirectory.Split("\")
+    $count = $folders.Count
+    if ($count -gt 3) {
+        $output = $folders[0] + "\...\"
+        $output += $folders[-2] + "\" + $folders[-1]
+    } else {
+        $output = $currentDirectory
+    }
+    "$output> "
+}

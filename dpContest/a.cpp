@@ -21,7 +21,8 @@ int cost(int n, int *a, int i) {
 int main(){
 
     int n;
-    int a[1000000];
+    int a[10000];
+    freopen("input.txt", "r", stdin);
     cin >> n;
     for(int i=0; i<n; i++){
         cin >> a[i];
