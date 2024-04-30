@@ -12,7 +12,7 @@ Somos un equipo de estudiantes de la UTN Regional Rosario apasionados por la pro
 
 
 ## *Estructura del Repositorio*
-/soluciones: En esta carpeta encontrarás nuestras soluciones a problemas de programación competitiva. Están organizadas por plataforma (Codeforces, AtCoder, etc.) y por el nombre del problema.
-/recursos: Aquí almacenamos recursos útiles como libros, tutoriales, y enlaces a plataformas de práctica.
-/herramientas: Contiene herramientas que utilizamos para mejorar nuestras habilidades de programación competitiva, como scripts de automatizacion, plantillas, etc.
+>soluciones: En esta carpeta encontrarás nuestras soluciones a problemas de programación competitiva. Están organizadas por plataforma (Codeforces, AtCoder, etc.) y por el nombre del problema.
+>recursos: Aquí almacenamos recursos útiles como libros, tutoriales, y enlaces a plataformas de práctica.
+>herramientas: Contiene herramientas que utilizamos para mejorar nuestras habilidades de programación competitiva, como scripts de automatizacion, plantillas, etc.
 
