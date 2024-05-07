@@ -25,7 +25,7 @@ int cost(int n, int *a, int i,int k) {
 int main(){
 
     int n, k;
-    int a[100000];
+    int a[100001];
     
     //freopen("input.txt", "r", stdin);
 

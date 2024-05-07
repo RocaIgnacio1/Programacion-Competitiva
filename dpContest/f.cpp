@@ -1,37 +1,48 @@
 #include <bits/stdc++.h>
 using namespace std;
+#define ll long long
 
-string dp[3000][3000];
+string s,t;
+int dp[3000][3000];
 
-string subsecuencia(string s, string t, int i, int j){
+int subsecuencia(int i, int j){
 
-    if( dp[i][j] != "" ) return dp[i][j];
-    if( s[i] == '\0' || t[j] == '\0' ) return ""; 
+    if( i == s.size() || j == t.size() ) return 0; 
+
+    if( dp[i][j] != -1 ) return dp[i][j];
 
     if ( s[i] == t[j] ) {
-        dp[i][j] = s[i] + subsecuencia(s,t,i+1,j+1);
+        dp[i][j] = 1 + subsecuencia(i+1,j+1);
         return dp[i][j];
     }
     else {
-        string a = subsecuencia(s,t,i+1,j);
-        string b = subsecuencia(s,t,i,j+1);
-        if( a.size() > b.size() ) dp[i][j] = a;
-        else dp[i][j] = b;
+        dp[i][j] = max(subsecuencia(i+1,j), subsecuencia(i,j+1));
         return dp[i][j];
     }
 }
 
+
+string respuesta = "";
+void sol(int i, int j){
+    if(i == s.size() || j == t.size() ) return;
+
+    if(s[i] == t[j]){
+        respuesta += s[i] , sol(i+1, j+1);
+    }else{
+        if(dp[i+1][j] > dp[i][j+1]) sol(i+1, j);
+        else sol(i, j+1);
+    }
+}
+
 int main(){
-
-    string s,t;
-    freopen("input.txt", "r", stdin);
+    
+    //freopen("input.txt", "r", stdin);
     cin >> s >> t;
-    for(int i=0; i<3000; i++)
-        for(int j=0; j<3000; j++)
-            dp[i][j] = "";
-
-    cout << subsecuencia(s, t, 0, 0) << endl;
-
-
+    memset(dp, -1, sizeof(dp));
+    
+    subsecuencia(0, 0);
+    sol(0, 0);
+    cout <<  respuesta << endl;
+    
     return 0;
 }
