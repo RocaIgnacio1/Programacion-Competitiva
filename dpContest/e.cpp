@@ -2,44 +2,50 @@
 using namespace std;
 #define ll long long
 
+int N;
+ll W;
 ll peso[101], valor[101];
-ll dp[101][100000];
+ll dp[101][int(1e5)+1];
 
-ll precioMax(int n, int w, int i) {
-    
-    if (dp[i][w] != 0) return dp[i][w];
-    if (w == 0) return 0;
-    if (i >= n) return 0;
-    if(i == n-1){
-        if(peso[i] > w) return 0;
-        else return valor[i];
+ll calcularPeso(int i, int valorRestante) {
+
+    if(valorRestante == 0) return 0; 
+
+    if(i<0) return 1e10; // no se puede llegar hasta el valor esperado con esta ramificacion de tomar/noTomar.
+
+    if(dp[i][valorRestante] != -1) return dp[i][valorRestante];
+
+    ll ans = calcularPeso(i-1, valorRestante);
+
+    if(valorRestante - valor[i] >= 0){
+        // se puede tomar
+        ans = min( ans, calcularPeso(i-1, valorRestante - valor[i]) + peso[i]);
     }
-    
-    if( peso[i] > w){
-        dp[i][w] = precioMax(n, w, i+1);
-    }else{ 
-        dp[i][w] = max( precioMax(n, w, i+1), precioMax(n, w-peso[i], i+1) + valor[i]);
-        
-    }
-    return dp[i][w];
+
+    return dp[i][valorRestante] = ans;
 }
 
 
 int main() {
-    ll n,w;
     freopen("input.txt", "r", stdin);
-    cin >> n >> w;
-    for(int i=0; i<n; i++){
+    cin >> N >> W;
+    for(int i=0; i<N; i++){
         cin >> peso[i];
         cin >> valor[i];
     }
     memset(dp, -1, sizeof(dp));
     
-    cout << precioMax(n, w, 0) << endl;
+    int maximoValor = N*1000;
+
+    for(int i=maximoValor; i>=0; i--){
+
+        if(calcularPeso(N-1,i) <= W){
+            // el valor i es posible con una mochila W.
+            cout << i << endl;
+            break;
+        }
+
+    }
 
     return 0;
 }
-
-
-
-
