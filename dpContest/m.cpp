@@ -1,53 +1,53 @@
 #include <bits/stdc++.h>
-#include <cstdio>
-#define ll long long
 using namespace std;
+#define ll long long
 
-int modulo = 1e9 + 7;
-int N;
-ll K;
-ll A[101];
-ll dp[101][100010];
-ll acumulado[101];
+int n, k;
+ll dp[101][100002];
 
-ll formas(int i, ll caramelos)
-{   
-    //if(caramelos>acumulado[i]) return 0;
-
-    if(i == N-1){
-        if(caramelos > A[i]) return 0;
-        else return 1;
+void cargarDp(vector<int> v){
+    dp[0][0] = 0;
+    ll aux;
+    //cout << "v[0]: " << v[0] << endl;
+    for(int j = 0; j <= k; j++){
+        if(j<=v[0]){
+            dp[0][j] = j + 1;
+        }else{
+            dp[0][j] = dp[0][j-1];
+        }
     }
-    if (dp[i][caramelos] != -1) return dp[i][caramelos];
-    
-    ll res=0;
-    for(ll j=0; j<= min(A[i],caramelos) ; j++){
-         
-        res += (formas(i+1, caramelos-j)% modulo);
+    for(int i = 1; i < n; i++){
+        dp[i][0] = 1;
     }
-    
-
-    dp[i][caramelos] = (res%modulo);
-    return dp[i][caramelos];
-
+    for(int i = 1; i < n; i++){
+        for(int j = 1; j <= k; j++){
+            if(j>v[i]){
+                aux = v[i]; 
+            }else{
+                aux = j;
+            }
+            dp[i][j] = (dp[i-1][j] - dp[i-1][j-aux-1] + dp[i][j-1] + 1000000007)% 1000000007;
+        }
+    }
 }
 
 int main(){
-    freopen("input.txt", "r", stdin);
-
-    cin >> N >> K;
-    memset(dp,-1, sizeof(dp));
-    for (int i = 0; i < N; i++){
-        cin >> A[i];
+    //freopen("input.txt", "r", stdin);
+    cin >> n >> k;
+    vector<int> v;
+    for(int i = 0; i < n; i++){
+        int j;
+        cin >> j;
+        v.push_back(j);
     }
+    cargarDp(v);
+    /*
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j <= k; j++){
+            cout << dp[i][j] << " ";
+        }
+        cout << endl;
+    }*/
+    cout << (dp[n-1][k] - dp[n-1][k - 1] + 1000000007) % 1000000007;
 
-    ll sumador=0;
-    for(int i=N-1; i>=0; i--){
-        sumador += A[i];
-        acumulado[i]=sumador;
-    }
-
-    cout << formas(0, K)%modulo << endl;
-
-    return 0;
 }
