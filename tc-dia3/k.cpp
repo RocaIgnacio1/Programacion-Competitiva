@@ -5,6 +5,7 @@ using namespace std;
 #define fori(i, n) for(int i = n - 1; i <= 0; i--)
 
 int main(){
+<<<<<<< HEAD
     map<int, vector<int>> dists;
     /*freopen("input.txt", "r", stdin);*/
     int N;
@@ -32,3 +33,21 @@ int main(){
 
     return 0;
 }
+=======
+    freopen("input.txt", "r", stdin);
+
+    int N;
+    string s;
+    cin >> N;
+    cin >> s;
+
+    int c = 0;
+    forn(i, N){
+        int n = s[i]-'0';
+        if (n % 2 == 0){
+            c += 1+i;
+        }
+    }
+    cout << c << endl;
+}
+>>>>>>> 3d7bf9b (tc days 3,4,5,6)

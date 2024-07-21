@@ -55,9 +55,9 @@ int main(){
             
             if((s[j]!='m' && s[j]!='M' && s[j]!='e' && s[j]!='E' && s[j]!='o' && s[j]!='O' && s[j]!='w' && s[j]!='W')){
                 m=false;
-                cout << s[j]<< endl;
                 break;
             }
+            
         }
 
         if(m && e && o && w){
