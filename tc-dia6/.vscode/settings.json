@@ -6,6 +6,7 @@
         "tuple": "cpp",
         "cstdlib": "cpp",
         "random": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "*.tcc": "cpp"
     }
 }
