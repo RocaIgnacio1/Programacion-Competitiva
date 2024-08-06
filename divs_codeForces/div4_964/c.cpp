@@ -13,23 +13,27 @@ int main() {
     cin >> t;
     
     forn(w,t){
-        int n;
-        vector<int> a;
-        cin >> n;
-        int ans=0;
+        ll n,s,m;
+        cin >> n >> s >> m;
+        ll finalAnterior=0;
+        bool ban=false;
         forn(i,n){
-            int valor;
-            cin >> valor;
-            a.pb(valor);
-        }
-        int maximo=0;
-        forn(i,n){
-            if(i%2==0){
-                maximo = max(maximo,a[i]);
+            ll l,r;
+            cin >> l >> r;
+
+            if(l-finalAnterior >= s){
+                ban=true;
             }
+            if(i==n-1 && m-r>=s) ban=true;
+
+            finalAnterior=r;
         }
 
-        cout << maximo << endl;
+        if(ban){
+            cout << "YES" << endl;
+        }else{
+            cout << "NO" << endl;
+        }
     }
     return 0;
 }
