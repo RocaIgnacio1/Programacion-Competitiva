@@ -11,18 +11,24 @@ int main() {
     //freopen("input.txt","r",stdin);
     int t;
     cin >> t;
+    
     forn(w,t){
-        int n,x;
-        cin >> n >> x;
-        int ans=0;
-        for(int a=1; a<=n; a++){
-            for(int b=1; a*b<=n; b++){
-                for(int c=1; (a*b+a*c+b*c)<=n;c++){
-                    if(a+b+c <= x) ans++;
-                }
-            }
+        int n;
+        cin >> n;
+        vector<int> p;
+        forn(i,n){
+            int valor;
+            cin >> valor;
+            p.push_back(valor);
         }
-        cout << ans << endl;
+        
+        //cout << "hola" << endl;
+        cout << p[n-1] << " ";
+        forn(i,n-1){
+            cout << p[i] << " ";
+        }
+        cout << endl;
+
     }
-    return 0;
+    
 }
