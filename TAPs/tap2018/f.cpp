@@ -16,47 +16,61 @@ int main() {
         cin >> a;
         occurs[a]++;
     }
+    int o =  occurs.size();
+   //cout << "Cantidad: " << o << endl;
     
-    if (occurs.size() == M){
-        if (M == 1){
-            cout << 1 << endl;
+    // Si estan completas las ocurrencias es 0.
+    if(o==M && M!=1){
+        cout << 0 << endl;
+        return 0;
+    }
+
+    // Si las ocurrencias son 4 o mas, se pueden representar todos los numeros
+    if(o>=4 && M>4){
+        cout << M << endl;
+        return 0;
+    }
+
+    // Si las ocurrencias son 3.
+    if(o==3){
+        if(M==4 && N==3){
+            cout << M-1 << endl;
+            return 0;
         }else{
-            cout << 0 << endl;
-        }
-    }else{
-        int c=0;
-        for(auto i:occurs){
-            c++;
-        }
-        if(c==1){
-            cout << 1 << endl; 
+            cout << M << endl;
             return 0;
         }
-        if(occurs.size()==2 && M==3){
-            int c=0, cant1, cant2;
-            for(auto i:occurs){
-                if(c==0) cant1 = i.second;
-                if(c==1) cant2 = i.second;
-                c++;
-            }
-            
-            if(cant1!=cant2){
-                cout << M-1 << endl;
-            }else{
-                if(cant1==1){
-                    cout << M-2 << endl;
-                }else{
-                    cout << M << endl;
-                }
-            }
-            return 0;   
-            
-        }     
-        else{
-            cout << M << endl;
-        }
-        
     }
+    
+    // Si las ocurrencias son 2.
+    if(o==2){
+        if(N==2){
+            cout << M-2 << endl;
+            return 0;
+        }
+        if(N==3){
+            cout << M-1 << endl;
+            return 0;
+        }
+        bool ban=false;
+        for(auto i:occurs){
+            if(i.second==1)ban=true;
+        }
+        if(ban){
+            cout << M-1 << endl;
+            return 0;
+        }else{
+            cout << M << endl;
+            return 0;
+        }
+    }
+
+    // Si las ocurrencias son 1.
+    if(o==1){
+        cout << 1 << endl;
+        return 0;
+    }
+
 
     return 0;
 }
