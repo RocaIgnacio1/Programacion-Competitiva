@@ -7,14 +7,11 @@ using namespace std;
 vector<int> ddp, jdp;
 int n;
 
-bool sortbysfirst(const pair<int,int> &a,
-            const pair<int,int> &b)
-{
+bool sortbysfirst(const pair<int,int> &a, const pair<int,int> &b) {
     if(a.first == b.first){
         return a.second > b.second;
     }
     return a.first < b.first;
-    
 }
 
 void findMax(vector<pair<int, int>> &d, vector<pair<int,int>> &j){
@@ -29,6 +26,7 @@ void findMax(vector<pair<int, int>> &d, vector<pair<int,int>> &j){
         jdp.push_back(maxi);
     }
 }
+
 int medio(vector<pair<int, int>> &d, vector<pair<int,int>> &j, vector<int> &dp){
     int maxi = 0;
     forn(i, d.size()){
@@ -55,7 +53,6 @@ int medio(vector<pair<int, int>> &d, vector<pair<int,int>> &j, vector<int> &dp){
                 }
             }
         }
-    //cout << maxi << endl;
     return maxi;
 }
 
@@ -81,5 +78,4 @@ int main(){
     maxi = max(maxi, medio(d,j,jdp));
     maxi = max(maxi, medio(j,d,ddp));
     cout << maxi << endl;
-
 }
