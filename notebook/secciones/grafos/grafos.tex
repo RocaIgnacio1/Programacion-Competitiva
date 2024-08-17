@@ -1,0 +1,41 @@
+\newpage
+\section{Grafos}
+
+\subsection{Recorrer Grafos}
+Dado un Grafo como lista de adjacencias
+
+\begin{lstlisting}[language=C++]
+#include <bits/stdc++.h>
+#define MAXN 100000
+using namespace std;
+
+vector<int> G[MAXN];
+bool visited[MAXN];
+\end{lstlisting}
+
+Podemos recorrerlo con DFS o con BFS.
+
+\subsubsection{DFS}
+\lstinputlisting[language=C++]{secciones/grafos/dfs.cpp}
+
+\subsubsection{BFS}
+\lstinputlisting[language=C++]{secciones/grafos/bfs.cpp}
+\newpage
+
+\subsection{Camino Mínimo}
+
+\subsubsection{Bellman-Ford}
+El algoritmo de Bellman-Ford encuentra el camino desde un nodo de origen a todos los nodos del grafo. \\
+\textbf{Complejidad = O(nm)}
+
+\lstinputlisting[language=C++]{secciones/grafos/bellman-ford.cpp}
+\subsubsection{Ciclos negativos}
+El algoritmo es capaz de detectar ciclos negativos. Para eso Se debe correr una vez m'as
+\newpage
+
+\subsubsection{Dijkstra}
+El algorimo necesita que todos los pesos sean > 0 \\
+\textbf{Complejidad = O(n + m log m)}
+\lstinputlisting[language=C++]{secciones/grafos/dijkstra.cpp}
+
+\newpage

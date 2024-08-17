@@ -1,0 +1,17 @@
+\section{Utils}
+
+\subsection{Binary Search}
+\lstinputlisting[language=C++]{secciones/utils/bs.cpp}
+
+\subsection{Sort}
+Ordenar un vector de pair por su segunda componente
+\begin{lstlisting}[language=C++]
+vector<pair<int, int>> v;
+
+bool sortbysec(const pair<int,int> &a, const pair<int,int> &b){
+	return (a.second < b.second);
+}
+
+sort(v.begin(), v.end(), sortbysec);
+\end{lstlisting}
+\newpage

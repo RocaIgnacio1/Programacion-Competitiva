@@ -1,3 +1,7 @@
 *.exe
 input.txt
 .vscode/
+.fuse*
+notebook.*
+!notebook.pdf
+!notebook.tex
