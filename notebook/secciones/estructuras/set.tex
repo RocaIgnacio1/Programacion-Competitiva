@@ -1,0 +1,37 @@
+\begin{center}
+    \begin{tabular}{||l|l|l||}
+        \hline
+        \textbf{Función}         & \textbf{Explicación}                               & \textbf{O} \\ \hline
+        (constructor)            & Construct unordered\_set                          & -    \\ \hline
+        (destructor)             & Destroy unordered\_set                            & -    \\ \hline
+        operator=                & Assign content                                    & O(n) \\ \hline
+        empty                    & Test whether container is empty                   & O(1) \\ \hline
+        size                     & Return container size                             & O(1) \\ \hline
+        max\_size                & Return maximum size                               & O(1) \\ \hline
+        begin                    & Return iterator to beginning                      & O(1) \\ \hline
+        end                      & Return iterator to end                            & O(1) \\ \hline
+        find                     & Get iterator to element                           & O(n) \\ \hline
+        count                    & Count elements with a specific key                & O(n) \\
+                                 & Returns 0 or 1                                    & \\ \hline
+        equal\_range             & Get range of elements with a specific key         & O(n) \\ \hline
+        emplace                  & Construct and insert element                      & O(n) \\ \hline
+        emplace\_hint            & Construct and insert element with hint            & O(n) \\ \hline
+        insert                   & Insert elements                                   & O(n) \\ \hline
+        erase                    & Erase elements                                    & O(n) \\ \hline
+        clear                    & Clear content                                     & O(n) \\ \hline
+        swap                     & Swap content                                      & O(1) \\ \hline
+        reserve                  & Request a capacity change                         & O(n) \\ \hline
+        key\_eq                  & Get key equivalence predicate                     & O(1) \\ \hline
+    \end{tabular}
+    \label{tab:set_member_functions_complexity}
+\end{center}
+\newpage
+
+\begin{lstlisting}[language=C++]
+unordered_set<int> s;
+s.insert(3);
+s.insert(5);
+s.erase(3);
+s.count(3); // -> 0
+s.count(5); // -> 1
+\end{lstlisting}
