@@ -3,7 +3,7 @@ latexmk -pdf -pvc notebook.tex
 
 math:
 - [X] Reglas divisibilidad
-- [ ] coprimos
+- [X] coprimos
 - [X] identidades
 - [ ] modulos
 - [ ] modular inverse
