@@ -1,4 +1,5 @@
 *.exe
+a
 input.txt
 .vscode/
 .fuse*
