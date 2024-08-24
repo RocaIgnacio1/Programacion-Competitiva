@@ -1,0 +1,1 @@
+cout << fixed << setprecision(20) << ans << endl;
