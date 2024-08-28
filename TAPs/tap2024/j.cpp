@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define forn(i,n) for(int i = 0; i < n; i++)
+#define pb push_back
 typedef long long ll;
 
 #ifdef EBUG
@@ -43,6 +44,21 @@ int main(){
         occurs[b]++;
     }
 
+    /*caso
+        2 6
+        3 3 3 3
+    */
+    if (occurs.size() == 1){
+        if (B[0]+B[1] == X){
+            cout << "*" << endl;
+            return 0;
+        }
+    }
+
+    /*caso
+        4 7
+        3 4 3 4
+    */
     if (occurs.size() == 2){
         ll sum = 0;
         for (auto i : occurs){
@@ -55,9 +71,16 @@ int main(){
     }
 
     ll mid = X/2;
-    if (X % 2 == 0 && occurs[mid] < N - occurs[mid]){
-        cout << "*" << endl;
-        return 0;
+    /*caso
+        4 10
+        4 5 5 5
+    */
+    auto it = occurs.find(mid);
+    if (X % 2 == 0 &&  occurs.find(mid)!=occurs.end()){
+        if(occurs[mid] > N-occurs[mid]+1 && occurs[mid]>1){
+            cout << "*" << endl;
+            return 0;
+        }
     }
 
     sort(B.begin(), B.end());
@@ -68,42 +91,65 @@ int main(){
             parejas[b] = s;
         }
     }
-
+    vector<ll> ans;
+    //meto la primera parte de las parejas
     for(auto i : parejas){
         if (i.first >= mid){
             break;
         }
         forn(j, occurs[i.first]){
-            if (X % 2 == 0 && occurs[mid] > 0){
-                cout << mid << " ";
-                occurs[mid]--;
-            }
-            cout << i.first << " ";
+            ans.pb(i.first);
         }
     }
+    // separo con un mid
+    if(occurs.find(mid)!=occurs.end() && parejas.size()==3){
+        ans.pb(mid);
+        occurs[mid]--;
+    }
 
+    // meto las no parejas
     for(auto i : occurs){
         if (parejas.find(i.first) == parejas.end()){
             forn(j, occurs[i.first]){
                 if (i.first != mid){
-                    cout << i.first << " ";
+                    ans.pb(i.first);
                 }
+                
             }
         }
     }
 
+    //meto la segunda parte de las parejas
     for(auto i : parejas){
-        if (i.second < mid){
+        if (i.second <= mid){
             break;
         }
         forn(j, occurs[i.second]){
-            if (X % 2 == 0 && occurs[mid] > 0){
-                cout << mid << " ";
-                occurs[mid]--;
-            }
-            cout << i.second << " ";
+            ans.pb(i.second);
         }
     }
 
+    
+    // muestro e intercalo los mid
+   forn(i,ans.size()){
+        if(occurs[mid]<=0){
+            cout << ans[i] << " ";
+            continue;
+        }
+        if(ans[i]!=mid && ans[i-1]!=mid){
+            cout << mid << " ";
+            cout << ans[i] << " ";
+            occurs[mid]--;
+        }else{
+            cout << ans[i] << " ";
+            cout << ans[i+1] << " ";
+            i++;
+        }
+        
+   }
+   if(occurs[mid]>0){
+        cout << mid << " ";
+   }
+    
     return 0;
 }
