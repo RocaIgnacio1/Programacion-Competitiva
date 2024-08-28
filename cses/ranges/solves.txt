@@ -17,3 +17,8 @@ h) Hotel Queries
 segment tree max with search element
 soluciona problemas de buscar el minimo valor que cumple algo y actualizarlo
 es como una binary search pero que cada vez que buscas podes actualizar los elementos
+i) List Removals
+segment tree count elementos
+la base del segment tree esta hecha con 1, a medida que vas eliminando un elemento el 1 pasa a ser un 0
+para encontrar la posicion de tu elemento tenes que ir a la izqueierda si pos < izq y a derecha en caso contrario
+pero con pos = pos-izq
