@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 #define INF 100000000
 using namespace std;
+#define ll long long
 
 int n, t[4*10000];
 
@@ -15,7 +16,7 @@ void buildST(int a[], int v, int tl, int tr) { // este te hace las sumas
    }
 }
 
-int queryST(int v, int tl, int tr, int l, int r){
+ll queryST(int v, int tl, int tr, int l, int r){
    if( l > r){
        return 0;
    }
@@ -40,4 +41,14 @@ void updateST(int v, int tl, int tr, int pos, int new_val){
        }
        t[v] = t[v*2] + t[v*2+1];
    }
+}
+
+ll searchST(int v, int tl, int tr,  int m){ //buscar el primer elemento mayor a un numero
+   if( tl == tr){
+       return tl;
+   }
+   int tm = (tl + tr)/2;
+   if(t[2*v] >= m) return searchST(2*v, tl, tm, m);
+   return searchST(2*v+1, tm+1, tr, m);
+
 }

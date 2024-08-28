@@ -1,0 +1,19 @@
+a) Static Ranges Sum Queries 
+prefixsum
+b) Static Range Minimum Queries
+segment tree min
+c) Dynamic Range Sum Queries
+segment tree sum
+d) Dynamic Range Minimum Queries
+segment tree min
+e) Range Xor Queries
+segment tree xor
+f) Range Update Queries
+segment tree difference array
+soluciona problemas de sumar valores a un rango
+g) Forest Queries
+prefix sum bidimencional
+h) Hotel Queries
+segment tree max with search element
+soluciona problemas de buscar el minimo valor que cumple algo y actualizarlo
+es como una binary search pero que cada vez que buscas podes actualizar los elementos

@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define forn(i,n) for(int i = 0; i < n; i++)
+#define fori(i,n) for(int i = n-1; i >= 0; i--)
 
 #ifdef EBUG
 //local
@@ -114,53 +115,28 @@ int main(){
         cin >> s;
         mat.push_back(s);
     }
-    aux = mat;
-    forn(i, n-4){
-        forn(j, m-2){
-            
-            if(encontrarT(i, j)){
-                t++;
-                taparT(i,j);
-                taparT2(i,j);
-                
-            }else{
-                if(encontrarA(i,j)){
-                    taparP(i, j);
-
-                }
+    
+    fori(i, n-4){
+        fori(j, m-2){
+            if(encontrarA(i,j)){
+                a++;
+                taparA(i,j);
             }
         }
-    }
-
-    mat = aux;
-    forn(i, n-4){
-        forn(j, m-2){
-            
-            if(encontrarT(i, j)){
+        fori(j, m-2){
+            if(encontrarP(i,j)){
+                p++;
+                taparP(i,j);
+            }
+        }   
+        fori(j, m-2){
+            if(encontrarT(i,j)){
                 t++;
                 taparT(i,j);
-            }else{
-                if(encontrarA(i,j)){
-                    if(mat[i+3][j+1] == '#'){
-                        p++;
-                        taparP(i,j);
-                    }else if(i+7 >= n || j+4 >= m){
-                        a++;
-                        taparA(i,j);
-                    }else if(encontrarP(i+3, j+2)){
-                        p++;
-                        taparP(i,j);
-                    }else{
-                        a++;
-                        taparA(i,j);
-                    }
-                }else if(encontrarP(i, j)){
-                    p++;
-                    taparP(i, j);
-                }
             }
-        }
+        }   
     }
+
 
     cout << t << " " << a << " " << p << endl;
 }
