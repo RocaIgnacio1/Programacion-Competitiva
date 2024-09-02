@@ -10,36 +10,38 @@ using namespace std;
 #else
 #endif
 
-array<ll, 4*2*100000> t;
+array<pair<ll, ll> , 4*2*100000> t;
 vector<ll> a;
 void buildST(int v, int tl, int tr) { // este te hace las sumas
    if (tl == tr) {
-       t[v] = a[tl];
+       t[v] = make_pair(a[tl], a[tl]);
    } else {
        int tm = (tl + tr) / 2;
        buildST(v * 2, tl, tm);
        buildST(v * 2 + 1, tm + 1, tr);
-       t[v] = max(t[v * 2],t[v * 2 + 1]); //aca esta la parte en que las suma
+       ll prefix = t[v * 2].second + t[v * 2 + 1].second;
+       t[v] = make_pair(max(t[v * 2].first, t[v * 2].second + t[v * 2 + 1].first), prefix); //aca esta la parte en que las suma
    }
 }
 
-int queryST(int v, int tl, int tr, int l, int r){
+pair<int,int> queryST(int v, int tl, int tr, int l, int r){
    if( l > r){
-       return -1e9-5;
+       return make_pair(0,0);
    }
    if( l == tl && r == tr){
        return t[v];
    }
    int tm = (tl + tr)/2;
-   int m = max(queryST(v*2, tl, tm, l, min(r, tm)), queryST(v*2+1, tm+1, tr, max(l, tm+1), r)); // esto lo hace para sumar
    //cout << l << " " << r << " " << m << endl;
-   return m;
-
+   pair<int,int> q1 = queryST(v*2, tl, tm, l, min(r, tm));
+   pair<int,int> q2 = queryST(v*2+1, tm+1, tr, max(l, tm+1), r);// esto lo hace para sumar
+   if(q1.first>q2.first) return q1;
+   return q2;
 }
 
 void updateST(int v, int tl, int tr, int pos, ll new_val){
    if(tl == tr){
-       t[v] = new_val;
+       t[v] = make_pair(new_val, new_val);
    } else {
        int tm = (tl + tr) / 2;
        if(pos <= tm){
@@ -47,7 +49,8 @@ void updateST(int v, int tl, int tr, int pos, ll new_val){
        }else{
            updateST(v*2 + 1, tm+1, tr, pos, new_val);
        }
-       t[v] = max(t[v*2], t[v*2+1]);
+       ll prefix = t[v * 2].second + t[v * 2 + 1].second;
+       t[v] = make_pair(max(t[v * 2].first, t[v * 2].second + t[v * 2 + 1].first), prefix);
    }
 }
 
@@ -63,24 +66,22 @@ int main(){
         int p;
         cin >> p;
         sum += p;
-        a.push_back(sum);
+        a.push_back(p);
     }
     int mult = 1;
     while(mult < n) mult*=2;
     fora(n, i, mult){
-        a.push_back(-1e9-5);
+        a.push_back(0);
     }
     buildST(1, 0, mult-1);
     forn(i,q){
         int p, x, y;
         cin >> p >> x >> y;
         if(p==1){
-            if(x>1)updateST(1, 0, mult-1, x-1, a[x-2] + y);
-            else updateST(1, 0, mult-1, x-1, y);
+            updateST(1, 0, mult-1, x-1, y);
         }else{
-            int aux = queryST(1, 0, mult - 1, x-1, y-1);
-            if(x>1) cout << aux << endl;
-            else cout << aux<< endl;
+            pair<int, int> aux = queryST(1, 0, mult - 1, x-1, y-1);
+            cout << aux.first << endl;
         }
     }
 
