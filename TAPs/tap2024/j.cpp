@@ -13,28 +13,27 @@ typedef long long ll;
 vector<ll> B;
 
 int search(ll n){
-    int l = 0, r = B.size(), mid = (l+r)/2;
+    int l = 0, r = B.size() - 1; 
     while(l <= r){
+        int mid = (l + r) / 2;
         if (n == B[mid]){
             return mid;
-        }else if (n < B[mid]){
+        } else if (n < B[mid]){
             r = mid - 1;
-        }else{
+        } else {
             l = mid + 1;
         }
-        mid = (l+r)/2;
     }
     return -1;
 }
-
 int main(){
     #ifdef EBUG
-        freopen("input.txt", "r", stdin);
+        freopen("in1.txt", "r", stdin);
     #endif
     int N;
     ll X; 
-    map<int, int> occurs;
-    map<int, int> parejas;
+    map<ll, int> occurs;
+    map<ll, int> parejas;
 
     cin >> N >> X;
     forn(i, N){
@@ -91,65 +90,57 @@ int main(){
             parejas[b] = s;
         }
     }
+
     vector<ll> ans;
-    //meto la primera parte de las parejas
+    
+    // parejas parte izquierda
     for(auto i : parejas){
-        if (i.first >= mid){
-            break;
-        }
+        if (i.first >= i.second)break;
         forn(j, occurs[i.first]){
-            ans.pb(i.first);
-        }
-    }
-    // separo con un mid
-    if(occurs.find(mid)!=occurs.end() && parejas.size()==3){
-        ans.pb(mid);
-        occurs[mid]--;
+            if(X%2==0 && occurs.find(mid)!=occurs.end() && occurs[mid]>1){
+                occurs[mid]--;
+                ans.push_back(mid);
+            }
+            ans.push_back(i.first);
+        }    
     }
 
-    // meto las no parejas
+    // mid separador
+    if(X%2==0 && occurs.find(mid)!=occurs.end() && occurs[mid]>0){
+        occurs[mid]--;
+        ans.push_back(mid);
+    }
+
+    // no parejas
     for(auto i : occurs){
         if (parejas.find(i.first) == parejas.end()){
             forn(j, occurs[i.first]){
-                if (i.first != mid){
-                    ans.pb(i.first);
+                ans.push_back(i.first);
+                if(X%2==0 && occurs.find(mid)!=occurs.end() && occurs[mid]>0){
+                    occurs[mid]--;
+                    ans.push_back(mid);
                 }
-                
             }
         }
     }
 
-    //meto la segunda parte de las parejas
+    // parejas der a la derecha
     for(auto i : parejas){
-        if (i.second <= mid){
-            break;
-        }
+        if (i.second <= i.first)break;
         forn(j, occurs[i.second]){
-            ans.pb(i.second);
+            ans.push_back(i.second);
+            if(X%2==0 && occurs.find(mid)!=occurs.end() && occurs[mid]>0){
+                occurs[mid]--;
+                ans.push_back(mid);
+            }
         }
     }
+    
 
-    
-    // muestro e intercalo los mid
-   forn(i,ans.size()){
-        if(occurs[mid]<=0){
-            cout << ans[i] << " ";
-            continue;
-        }
-        if(ans[i]!=mid && ans[i-1]!=mid){
-            cout << mid << " ";
-            cout << ans[i] << " ";
-            occurs[mid]--;
-        }else{
-            cout << ans[i] << " ";
-            cout << ans[i+1] << " ";
-            i++;
-        }
-        
-   }
-   if(occurs[mid]>0){
-        cout << mid << " ";
-   }
-    
+    forn(i,ans.size()){
+        cout << ans[i] << " ";
+    }
+
+
     return 0;
 }

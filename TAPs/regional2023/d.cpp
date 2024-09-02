@@ -16,28 +16,57 @@ int main() {
 #ifdef EBUG
     freopen("input.txt", "r", stdin);
 #endif
-    int n,g;
-    vector<string> pal;
-    string corr;
+    int n, g;
+    map<char,int> a;
     cin >> n;
-    cin >> corr;
+    
+    vector<string> palabras;
     forn(i,n){
         string s;
         cin >> s;
-        pal.push_back(s);
+        if(i==0){
+            forn(j, s.size()){
+                a[s[j]]++;
+            }
+        }
+        palabras.push_back(s);
     }
+    string pal=palabras[0];
+   
+    cin >> g;
+    vector<string> val;
     forn(i,g){
         string s;
         cin >> s;
-        for(auto j: s){
-            for(auto k: pal){
-                for(auto l: k){
-                    if
+        val.push_back(s);
+    }
+     
+
+    vector<string> rtas;
+    forn(i,n){
+        string f;
+        forn(j,5){
+            char letra = palabras[i][j];
+            if(letra==pal[j]){
+                f+='*';
+            }else{
+                if(a.find(letra)!=a.end()){
+                    f+='!';
+                }else{
+                    f+='X';
                 }
             }
         }
+        rtas.push_back(f);
+    }  
+
+    forn(j,g){
+        int ans=0;
+        forn(i,rtas.size()){
+            if(rtas[i].compare(val[j])==0)ans++;
+        }     
+        cout << ans << endl;
     }
-    
 
 
     return 0;

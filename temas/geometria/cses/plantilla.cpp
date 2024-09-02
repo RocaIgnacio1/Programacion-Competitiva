@@ -1,13 +1,14 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long
+
 #define forn(i, n) for(int i = 0; i < n; i++)
 #define fori(i, n) for(int i = n - 1; i >= 0; i--)
 #define mos(v) forn(auto i : v) cout << i << " ";
 typedef long long T;
 typedef double ld;
 const double EPS = 1e-9; 
-const long long INF = 1e18;
+const T INF = 1e18;
  
 struct pto{
 	double x, y;
@@ -26,7 +27,16 @@ struct pto{
 	double norm_sq(){return x*x+y*y;}
 };
 double dist(pto a, pto b){return (b-a).norm();}
-
+typedef pto vec;
+ 
+double angle(pto a, pto o, pto b){
+	pto oa=a-o, ob=b-o;
+	return atan2(oa^ob, oa*ob);}
+ 
+pto rotate(pto p, double theta){
+	return pto(p.x*cos(theta)-p.y*sin(theta),
+     p.x*sin(theta)+p.y*cos(theta));
+}
 int sgn(ll x){return x<0? -1 : !!x;}
 struct line{
 	line() {}
