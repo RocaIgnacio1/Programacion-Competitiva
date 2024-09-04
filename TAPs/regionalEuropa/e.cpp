@@ -8,36 +8,6 @@ typedef long double ld;
 const ld EPS = 1e-9; 
 const ll INF = 1e18+100;
 
-string u, v, uaux, vaux;
-bool cmpdv(deque<char> d, string v){
-    forn(i, d.size()){
-        if(d[i] != v[i]){
-            return false;
-        }
-    }
-    return true;
-}
-string solve(string a, string v){
-    deque<char> aux;
-    string res;
-    if(v.size()>a.size()) return a;
-    forn(i, v.size()){
-        aux.push_back(a[i]);
-    }
-    forn(i, a.size() - v.size()){
-        if(!cmpdv(aux, v)){
-            res.push_back(a[i]);
-        }
-        aux.pop_front();
-        aux.push_back(a[i + v.size()]);
-    }
-    if(!cmpdv(aux, v)){
-        fora(a.size()-v.size(), i, a.size()){
-            res.push_back(a[i]);
-        }        
-    }
-    return res;
-}
 #ifdef EBUG
 //local
 #else
@@ -51,36 +21,72 @@ int main(){
 
     int t;
     cin >> t;
-    forn(i, t){
+    forn(w, t){
+        string u,v;
         cin >> u;
         cin >> v;
-        uaux = solve(u, "ABAB");
-        vaux = solve(v, "ABAB");
-        u = uaux;
-        v = vaux;
-        uaux = solve(u, "BCBC");
-        vaux = solve(v, "BCBC");
-        u = uaux;
-        v = vaux;
-        uaux = solve(u, "BB");
-        vaux = solve(v, "BB");
-        u = uaux;
-        v = vaux;
-        uaux = solve(u, "AA");
-        vaux = solve(v, "AA");
-        u = uaux;
-        v = vaux;
-        uaux = solve(u, "CC");
-        vaux = solve(v, "CC");
-        u = uaux;
-        v = vaux;
-        if(u == v){
+        
+        int sumU=0;
+        string aux="";
+        forn(i,u.size()){
+            if(u[i]=='B')sumU++;
+            else aux+=u[i];
+        }
+        u=aux;
+        aux="";
+        int sumV=0;
+        forn(i,v.size()){
+            if(v[i]=='B')sumV++;
+            else aux+=v[i];
+        }
+        v=aux;
+        if((sumV%2==0 && sumU%2==1) || (sumV%2==1 && sumU%2==0)){
+            cout << "NO" << endl;
+            continue;
+        }
+  
+            
+        int ban=1;
+        while(ban>0){
+            ban=0;
+            aux="";       
+            forn(i,u.size()){
+                if(i==u.size()-1)aux+=u[i];
+                else{
+                    if((u[i]=='A' && u[i+1]=='A') || (u[i]=='C' && u[i+1]=='C')){
+                        //cout << u[i] << " " << u[i+1] << endl;
+                        i++;
+                        ban++;
+                    }else aux+=u[i];
+                }
+                
+            }
+            u=aux;
+        }
+        aux="";
+        ban=1;
+        while(ban>0){
+            ban=0;
+            aux="";
+            forn(i,v.size()){
+                if(i==v.size()-1)aux+=v[i];
+                else{
+                    if((v[i]=='A' && v[i+1]=='A') || (v[i]=='C' && v[i+1]=='C')){
+                        i++;
+                        ban++;
+                    }else aux+=v[i];
+                }
+                
+            }
+            v=aux;
+        }
+        
+        
+        if(u.compare(v)==0){
             cout << "YES" << endl;
         }else{
             cout << "NO" << endl;
         }
-
-
     }
 
 }
