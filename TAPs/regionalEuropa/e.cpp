@@ -8,7 +8,10 @@ typedef long double ld;
 const ld EPS = 1e-9; 
 const ll INF = 1e18+100;
 
+<<<<<<< HEAD
 string u, v, uaux, vaux;
+=======
+>>>>>>> d64935ac35f8d730118e075953f9416c199c3bcf
 #ifdef EBUG
 //local
 #else
@@ -45,9 +48,11 @@ int main(){
 
     int t;
     cin >> t;
-    forn(i, t){
+    forn(w, t){
+        string u,v;
         cin >> u;
         cin >> v;
+<<<<<<< HEAD
         int ub = 0, vb = 0;
         string uc, vc;
         forn(i, u.size()){
@@ -66,6 +71,70 @@ int main(){
         }
         if(ub%2 == vb%2 && solve(uc) == solve(vc)) cout << "YES" << endl;
         else cout << "NO" << endl;
+=======
+        
+        int sumU=0;
+        string aux="";
+        forn(i,u.size()){
+            if(u[i]=='B')sumU++;
+            else aux+=u[i];
+        }
+        u=aux;
+        aux="";
+        int sumV=0;
+        forn(i,v.size()){
+            if(v[i]=='B')sumV++;
+            else aux+=v[i];
+        }
+        v=aux;
+        if((sumV%2==0 && sumU%2==1) || (sumV%2==1 && sumU%2==0)){
+            cout << "NO" << endl;
+            continue;
+        }
+  
+            
+        int ban=1;
+        while(ban>0){
+            ban=0;
+            aux="";       
+            forn(i,u.size()){
+                if(i==u.size()-1)aux+=u[i];
+                else{
+                    if((u[i]=='A' && u[i+1]=='A') || (u[i]=='C' && u[i+1]=='C')){
+                        //cout << u[i] << " " << u[i+1] << endl;
+                        i++;
+                        ban++;
+                    }else aux+=u[i];
+                }
+                
+            }
+            u=aux;
+        }
+        aux="";
+        ban=1;
+        while(ban>0){
+            ban=0;
+            aux="";
+            forn(i,v.size()){
+                if(i==v.size()-1)aux+=v[i];
+                else{
+                    if((v[i]=='A' && v[i+1]=='A') || (v[i]=='C' && v[i+1]=='C')){
+                        i++;
+                        ban++;
+                    }else aux+=v[i];
+                }
+                
+            }
+            v=aux;
+        }
+        
+        
+        if(u.compare(v)==0){
+            cout << "YES" << endl;
+        }else{
+            cout << "NO" << endl;
+        }
+>>>>>>> d64935ac35f8d730118e075953f9416c199c3bcf
     }
 
 }
