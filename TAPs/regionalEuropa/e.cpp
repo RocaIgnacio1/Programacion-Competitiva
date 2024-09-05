@@ -9,40 +9,34 @@ const ld EPS = 1e-9;
 const ll INF = 1e18+100;
 
 string u, v, uaux, vaux;
-bool cmpdv(deque<char> d, string v){
-    forn(i, d.size()){
-        if(d[i] != v[i]){
-            return false;
-        }
-    }
-    return true;
-}
-string solve(string a, string v){
-    deque<char> aux;
-    string res;
-    if(v.size()>a.size()) return a;
-    forn(i, v.size()){
-        aux.push_back(a[i]);
-    }
-    forn(i, a.size() - v.size()){
-        if(!cmpdv(aux, v)){
-            res.push_back(a[i]);
-        }
-        aux.pop_front();
-        aux.push_back(a[i + v.size()]);
-    }
-    if(!cmpdv(aux, v)){
-        fora(a.size()-v.size(), i, a.size()){
-            res.push_back(a[i]);
-        }        
-    }
-    return res;
-}
 #ifdef EBUG
 //local
 #else
 //judge
 #endif
+
+string solve(string s){
+    string res;
+    int con = 1;
+    bool ban = true;
+    fora(1,i,s.size()){
+        if(s[i] == s[i-1]){
+            con ++;
+            ban = false;
+        }else{
+            if(con%2 != 0){
+                res.push_back(s[i-1]);
+            }
+            con = 1;
+        }
+    }
+    if(con%2 != 0){
+            res.push_back(s[s.size()-1]);
+    }
+    if(ban) return res;
+    con = 1;
+    return solve(res);
+}
 
 int main(){
     #ifdef EBUG
@@ -54,33 +48,24 @@ int main(){
     forn(i, t){
         cin >> u;
         cin >> v;
-        uaux = solve(u, "ABAB");
-        vaux = solve(v, "ABAB");
-        u = uaux;
-        v = vaux;
-        uaux = solve(u, "BCBC");
-        vaux = solve(v, "BCBC");
-        u = uaux;
-        v = vaux;
-        uaux = solve(u, "BB");
-        vaux = solve(v, "BB");
-        u = uaux;
-        v = vaux;
-        uaux = solve(u, "AA");
-        vaux = solve(v, "AA");
-        u = uaux;
-        v = vaux;
-        uaux = solve(u, "CC");
-        vaux = solve(v, "CC");
-        u = uaux;
-        v = vaux;
-        if(u == v){
-            cout << "YES" << endl;
-        }else{
-            cout << "NO" << endl;
+        int ub = 0, vb = 0;
+        string uc, vc;
+        forn(i, u.size()){
+            if(u[i] == 'B'){
+                ub++;
+            }else{
+                uc.push_back(u[i]);
+            }
         }
-
-
+        forn(i, v.size()){
+            if(v[i] == 'B'){
+                vb++;
+            }else{
+                vc.push_back(v[i]);
+            }
+        }
+        if(ub%2 == vb%2 && solve(uc) == solve(vc)) cout << "YES" << endl;
+        else cout << "NO" << endl;
     }
 
 }

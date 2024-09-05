@@ -1,88 +1,72 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define ll long long
-#define fora(p, i, n) for(int i = p; i < n; i++)
-#define forn(i, n) for(int i = 0; i < n; i++)
-#define fori(i, n) for(int i = n - 1; i <= 0; i--)
-#define forall(it, v) for (auto it = v.begin(); it != v.end(); it++)
+typedef long long ll;
+typedef long double ld;
+typedef pair<int,int> ii;
+const ll inf = 1e18+100;
+const ll mod = 1e9+7;
+const ll MAXN = 2e5+100;
+#define sz(v) (int(v.size()))
+#define all(v) begin(v), end(v)
+#define pb push_back
+#define pp pop_back
+#define F first
+#define S second
+#define forr(i,a,b) for(int i=(a); i<(b); i++)
+#define forn(i,n) forr(i,0,n)
+#define dforn(i,n) for(int i=n-1; i>=0; i--)
+#define forall(it,v) for(auto it=v.begin();it!=v.end();++it)
+
 
 #ifdef EBUG
 #else
 #endif
 
-array<pair<ll, ll> , 4*2*100000> t;
-vector<ll> a;
-void buildST(int v, int tl, int tr) { // este te hace las sumas
-   if (tl == tr) {
-       t[v] = make_pair(a[tl], a[tl]);
-   } else {
-       int tm = (tl + tr) / 2;
-       buildST(v * 2, tl, tm);
-       buildST(v * 2 + 1, tm + 1, tr);
-       ll prefix = t[v * 2].second + t[v * 2 + 1].second;
-       t[v] = make_pair(max(t[v * 2].first, t[v * 2].second + t[v * 2 + 1].first), prefix); //aca esta la parte en que las suma
-   }
+ 
+int const ST_LEN = 1 << 19; // 2 elevado a la 20
+pair<ll,ll> st[ST_LEN*2];
+ 
+void init() {
+	for (int i = 1; i < 2*ST_LEN; ++i) st[i] = {0,0};
 }
-
-pair<int,int> queryST(int v, int tl, int tr, int l, int r){
-   if( l > r){
-       return make_pair(0,0);
-   }
-   if( l == tl && r == tr){
-       return t[v];
-   }
-   int tm = (tl + tr)/2;
-   //cout << l << " " << r << " " << m << endl;
-   pair<int,int> q1 = queryST(v*2, tl, tm, l, min(r, tm));
-   pair<int,int> q2 = queryST(v*2+1, tm+1, tr, max(l, tm+1), r);// esto lo hace para sumar
-   if(q1.first>q2.first) return q1;
-   return q2;
+ 
+int ql, qr;
+ 
+pair<ll,ll> query_aux(int i, int l, int r) {
+	if (ql <= l && r <= qr) return st[i];
+	
+	if (qr <= l || r <= ql) return {0,0};
+ 
+	int m = (l+r)/2;
+	pair<ll,ll> p1=query_aux(i*2,l,m), p2=query_aux(i*2+1,m,r);
+	return {p1.F + p2.F, max(p1.S, p1.F + p2.S)};
 }
-
-void updateST(int v, int tl, int tr, int pos, ll new_val){
-   if(tl == tr){
-       t[v] = make_pair(new_val, new_val);
-   } else {
-       int tm = (tl + tr) / 2;
-       if(pos <= tm){
-           updateST(v*2, tl, tm, pos, new_val);
-       }else{
-           updateST(v*2 + 1, tm+1, tr, pos, new_val);
-       }
-       ll prefix = t[v * 2].second + t[v * 2 + 1].second;
-       t[v] = make_pair(max(t[v * 2].first, t[v * 2].second + t[v * 2 + 1].first), prefix);
-   }
+ 
+pair<ll,ll> query(int l, int r) {
+	ql = l; qr = r;
+	return query_aux(1, 0, ST_LEN);
 }
-
-int main(){
+ 
+void update(int i, ll x) {
+	i += ST_LEN;
+	st[i] = {x,max((ll)0,x)};
+	while (i /= 2) st[i] = {st[i*2].F + st[i*2+1].F,
+							max(st[i*2].S, st[i*2].F + st[i*2+1].S)};
+}
+ 
+int main() {
+    ios::sync_with_stdio(false), cin.tie(nullptr);
     #ifdef EBUG
         freopen("input.txt", "r", stdin);
     #endif
-
-    int n, q;
-    cin >> n >> q;
-    ll sum = 0;
-    forn(i,n){
-        int p;
-        cin >> p;
-        sum += p;
-        a.push_back(p);
-    }
-    int mult = 1;
-    while(mult < n) mult*=2;
-    fora(n, i, mult){
-        a.push_back(0);
-    }
-    buildST(1, 0, mult-1);
-    forn(i,q){
-        int p, x, y;
-        cin >> p >> x >> y;
-        if(p==1){
-            updateST(1, 0, mult-1, x-1, y);
-        }else{
-            pair<int, int> aux = queryST(1, 0, mult - 1, x-1, y-1);
-            cout << aux.first << endl;
-        }
-    }
-
+	ll n,q,a,b,x; cin>>n>>q;
+	init();
+	for(int i=1;i<=n;i++) cin>>x, update(i,x);
+	
+	while(q--){
+		cin>>x>>a>>b;
+		if(x==1) update(a,b);
+		else cout<<query(a,b+1).S<<"\n";
+	}
+    return 0;
 }
