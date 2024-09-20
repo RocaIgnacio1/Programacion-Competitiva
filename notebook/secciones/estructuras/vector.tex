@@ -1,0 +1,90 @@
+\begin{center}
+    \begin{tabular}{||l|l|l||}
+        \hline
+        \textbf{Función}          & \textbf{Explicación}                              & \textbf{O} \\ \hline
+        (constructor)             & Construct vector                                  & O(n)                 \\ \hline
+        (destructor)              & Vector destructor                                 & O(n)                 \\ \hline
+        operator=                 & Assign content                                    & O(n)                 \\ \hline
+        begin                     & Return iterator to beginning                      & O(1)                 \\ \hline
+        end                       & Return iterator to end                            & O(1)                 \\ \hline
+        rbegin                    & Return reverse iterator to reverse beginning      & O(1)                 \\ \hline
+        rend                      & Return reverse iterator to reverse end            & O(1)                 \\ \hline
+        cbegin                    & Return const\_iterator to beginning               & O(1)                 \\ \hline
+        cend                      & Return const\_iterator to end                     & O(1)                 \\ \hline
+        crbegin                   & Return const\_reverse\_iterator to reverse beginning  & O(1)             \\ \hline
+        crend                     & Return const\_reverse\_iterator to reverse end    & O(1)                 \\ \hline
+        size                      & Return size                                       & O(1)                 \\ \hline
+        resize                    & Change size                                       & O(n)                 \\ \hline
+        empty                     & Test whether vector is empty                      & O(1)                 \\ \hline
+        operator[]                & Access element                                    & O(1)                 \\ \hline
+        at                        & Access element                                    & O(1)                 \\ \hline
+        front                     & Access first element                              & O(1)                 \\ \hline
+        back                      & Access last element                               & O(1)                 \\ \hline
+        assign                    & Assign vector content                             & O(n)                 \\ \hline
+        push\_back                & Add element at the end                            & O(1) \\ \hline
+        pop\_back                 & Delete last element                               & O(1)                 \\ \hline
+        insert                    & Insert elements                                   & O(n)                 \\ \hline
+        erase                     & Erase elements                                    & O(n)                 \\ \hline
+        swap                      & Swap content                                      & O(1)                 \\ \hline
+        clear                     & Clear content                                     & O(n)                 \\ \hline
+        emplace                   & Construct and insert element                      & O(1) \\ \hline
+        emplace\_back             & Construct and insert element at the end           & O(1) \\ \hline
+    \end{tabular}
+\label{tab:vector_member_functions_complexity}
+\end{center}
+
+\newpage
+\subsubsection{emplace}
+\begin{lstlisting}[language=C++]
+vector<int> myvector = {10,20,30};
+
+auto it = myvector.emplace ( myvector.begin()+1, 100 );
+myvector.emplace ( it, 200 );
+myvector.emplace ( myvector.end(), 300 );
+
+for (auto& x: myvector)
+    cout << ' ' << x;
+// 10 200 100 20 30 300
+\end{lstlisting}
+
+\subsubsection{resize}
+Resizes the container so that it contains n elements. \\
+\lstinline[language=C++]{void resize (size_type n, const value_type& val);}
+\begin{lstlisting}[language=C++]
+vector<int> myvector;
+for (int i=1; i<10; i++) myvector.push_back(i);
+
+myvector.resize(5);
+myvector.resize(8, 100);
+myvector.resize(12);
+
+for (int i=0;i<myvector.size();i++)
+    cout << ' ' << myvector[i];
+//  1 2 3 4 5 100 100 100 0 0 0 0
+\end{lstlisting}
+
+\subsubsection{assign}
+Assigns new contents to the vector, replacing its current contents, and modifying its size accordingly. \\
+\lstinline[language=C++]{void assign (size_type n, const value_type& val);
+
+\begin{lstlisting}[language=C++]
+vector<int> first;
+vector<int> second;
+vector<int> third;
+
+first.assign (7,100);             // 7 ints with a value of 100
+
+vector<int>::iterator it;
+it=first.begin()+1;
+
+second.assign (it,first.end()-1); // the 5 central values of first
+
+int myints[] = {1776,7,4};
+third.assign (myints,myints+3);   // assigning from array.
+
+first.size() // -> 7
+second.size() // -> 5
+third.size()) // -> 3
+
+\end{lstlisting}
+

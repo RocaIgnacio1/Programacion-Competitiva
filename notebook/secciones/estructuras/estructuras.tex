@@ -1,6 +1,39 @@
 \newpage
 \section{Estructuras}
 
+\subsection{vector}
+\input{./secciones/estructuras/vector.tex}
+
+\subsection{unordered set}
+\input{./secciones/estructuras/set.tex}
+
+\subsection{Iterators}
+\begin{lstlisting}[language=C++]
+sort(v.begin(), v.end());
+reverse(v.begin(), v.end());
+random_shuffle(v.begin(), v.end());
+
+sort(v.begin(), v.end(), sortbysec);
+\end{lstlisting}
+
+sort complexity = $O(N log_2 N)$.
+
+Ordenar un vector de pair por su segunda componente
+\begin{lstlisting}[language=C++]
+vector<pair<int, int>> v;
+
+bool sortbysec(const pair<int,int> &a, const pair<int,int> &b){
+	return (a.second < b.second);
+}
+\end{lstlisting}
+
+También es posible ordenar un array normal:
+\begin{lstlisting}[language=C++]
+sort(a, a+n);
+reverse(a, a+n);
+random_shuffle(a, a+n)
+\end{lstlisting}
+
 \subsection{Segment Tree}
 \begin{tikzpicture}[main/.style = {draw, circle}]
     % Nivel 1
