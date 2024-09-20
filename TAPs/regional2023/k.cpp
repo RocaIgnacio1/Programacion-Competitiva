@@ -61,7 +61,7 @@ void solve25(){
 
 int mini[301][25];
 bool visitado[301][25];
-int dp[1 << 26][26];
+int dp[26][26];
 
 int main(){
     #ifdef EBUG
