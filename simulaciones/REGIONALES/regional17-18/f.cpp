@@ -2,7 +2,7 @@
 using namespace std;
 #define forn(i,n) for(int i = 0; i < n; i++)
 #define pb push_back
-#define MAXN 100000
+#define MAXN 1000000008
 typedef long long ll;
 typedef long double ld;
 const ld EPS = 1e-9; 
@@ -14,46 +14,35 @@ const ll INF = 1e18+100;
 //judge
 #endif
 
-int n;
-struct P {
-    int b, f, d;
-};
-
-bool ord(const P &a, const P &b){
-    return sqrt(a.b*a.b + a.f*a.f) > sqrt(b.b*b.b + b.f*b.f);
-}
-
-vector<P> personas;
-
-int dp[MAXN];
-ll solve(int i){
-    if (i >= n-1) return 0;
-    if (dp[i] != -1) return dp[i];
-
-    cout << dp[i] << endl;
-    return dp[i] = solve(i+1) + personas[i].d;
-}
 
 int main(){
     #ifdef EBUG
         freopen("input.txt", "r", stdin);
     #endif
-
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    int n;
     cin >> n;
-    memset(dp, -1, n+1);
+    vector<pair<int, int>> inp;
+    map<int, ll> m;
     forn(i, n){
-        int b, f, d;
-        cin >> b >> f >> d;
-        personas.push_back(P{b, f, d});
+        ll x,y, z;
+        cin >> x >> y >> z;
+        inp.push_back(make_pair(x,y));
+        m[y] += z;
+        cout << y << " " << z << endl << endl;
+    }
+    ll acum = 0;
+    for(auto i = (m.end())--; i != (m.begin())--; i--){
+        cout << i->first << " " << i->second << endl;
+        acum += i->first;
+        i->second = acum;
     }
 
-    sort(personas.begin(), personas.end(), ord);
-    for(auto p : personas){
-        cout << p.b << " " << p.f << " " << p.d << endl;
+    for(auto i: m){
+        cout << i.first << " " << i.second << endl;
     }
+    sort(inp.begin(), inp.end());
 
-    ll ans = solve(0);
-    cout << ans << endl;
-
-    return 0;
 }
