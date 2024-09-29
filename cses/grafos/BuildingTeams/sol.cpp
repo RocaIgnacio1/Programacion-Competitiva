@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-#include <unordered_map>
 using namespace std;
 #define forn(i, n) for(int i = 0; i < n; i++)
 #define DBG(x) cerr << #x << ": " << x << endl;
@@ -25,27 +24,32 @@ int main(){
     }
 
     queue<int> q;
-    vector<int> color(n, -1);
+    vector<bool> color(n, false);
+    vector<bool> visited(n, false);
 
-    q.push(0);
-    dist[0] = 0;
-    
-    while(!q.empty()){
-        int n = q.front(); q.pop();
+    forn(i, n){
+        if (visited[i]) continue;
+        q.push(i);
+        while(!q.empty()){
+            int n = q.front(); q.pop();
+            visited[n] = true;
 
-        for (int adj : G[n]) {
-            if (dist[adj] == -1) {
-                dist[adj] = dist[n] + 1;
-                parent[adj] = n;
-                q.push(adj);
+            for (int adj : G[n]) {
+                if (!visited[adj]){
+                    color[adj] = !color[n];
+                    q.push(adj);
+                }else if (color[adj] == color[n]){
+                    cout << "IMPOSSIBLE\n";
+                    return 0;
+                }
             }
         }
     }
 
-    if (dist[n-1] == -1) {
-        cout << "IMPOSSIBLE\n";
-        return 0;
+    forn(i, n) {
+        cout << color[i] + 1 << " ";
     }
+    cout << '\n';
  
     return 0;
 }
