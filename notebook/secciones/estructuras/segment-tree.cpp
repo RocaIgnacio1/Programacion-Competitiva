@@ -38,6 +38,8 @@ struct RMQ{
     }
 }mx;
 
+mx.init(v.size()); forn(i, v.size()) mx[i] = v[i]; v.updall();
+
 ll searchST(int v, int tl, int tr,  int m){ //buscar el primer elemento mayor a un numero
    if( tl == tr){
        return tl;
