@@ -57,6 +57,7 @@
         for(auto dir : dirs){
             pair<int, int> neigh = {actual.first + dir.first, actual.second + dir.second};
             if (neigh.first < 0 || neigh.first > R-1) continue;
+            if (neigh.second < 0 || neigh.first > R-1) continue;
             if (neigh.second < 0) neigh.second = R-1;
             if (neigh.second > C-1) neigh.second = 0;
             //cout << neigh.first << ", " << neigh.second << ": " << dp[neigh.first][neigh.second] << endl;
@@ -67,6 +68,15 @@
             }
         }
         return path[actual.first][actual.second] = have_path;
+    }
+
+    int dfs(int x, int y, bool **dp){
+        visitado[x][y] = true;
+        if (path[x][y] != -1) return path[x][y];
+        int a, b; 
+        b = y;
+        if(x > 0) a = x-1 else a = C-1;
+        if(!visitado[a][b] && dp[a][b] && dfs(a, b, dp)) path[x][y] = true; return true;
     }
 
     int path2[1001][101];
@@ -91,7 +101,6 @@
         return path2[actual.first][actual.second] = have_path;
     }
 
-
     int main(){
         #ifdef EBUG
             freopen("input.txt", "r", stdin);
@@ -101,8 +110,8 @@
         cout.tie(NULL);
 
         cin >> R >> C;
-        a1 = 0;
-        a2 = 0;
+        a1.reset();
+        a2.reset();
         forn(i, C){
             char a;
             cin >> a;
