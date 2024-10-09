@@ -12,22 +12,18 @@ using namespace std;
 vector<vector<int>> G;
 vector<bool> visited;
 vector<int> parent;
-int cycle_start = -1;
 
-bool dfs(int nodo, int prev = 0){
-    cout << nodo+1 << endl;
+int dfs(int nodo, int prev = 0){
     parent[nodo] = prev;
-    if(visited[nodo]) {
-        cycle_start = nodo;
-        return true;
-    }
+    if(visited[nodo]) return nodo;
     visited[nodo] = true;
 
     for(int adj : G[nodo]){
-        if (adj == prev) continue;
-        if (dfs(adj, nodo)) return true;
+        if (adj == prev) continue; // Para no volver para atras
+        int cycle = dfs(adj, nodo);
+        if (cycle != -1) return cycle;
     }
-    return false;
+    return -1;
 }
 
 int main(){
@@ -46,14 +42,14 @@ int main(){
         G[b].push_back(a);
     }
 
-    bool have_cycle;
+    int cycle_start = -1;
     forn(i, n){
-        have_cycle = dfs(i);
-        if (have_cycle) break;
+        if (visited[i]) continue;
+        cycle_start = dfs(i);
+        if (cycle_start != -1) break;
     }
-    cout << endl << cycle_start+1 << endl;
 
-    if (!have_cycle){
+    if (cycle_start == -1){
         cout << "IMPOSSIBLE\n";
         return 0;
     }
@@ -62,7 +58,6 @@ int main(){
     int next = parent[cycle_start];
     path.push_back(cycle_start+1);
     while(next != cycle_start){
-        /*cout << "HOLA" << endl;*/
         path.push_back(next+1);
         next = parent[next];
     }
