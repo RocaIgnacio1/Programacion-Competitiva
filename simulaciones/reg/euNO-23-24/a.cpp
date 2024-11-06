@@ -18,54 +18,43 @@ int n;
 ll s;
 vector<ll> c;
 
-
-
-void may(deque<ll> &a, deque<ll> &b, deque<ll> &c){
-    ll uno=0, dos=0, tres=0;
-    if(!a.empty())uno=a.back();
-    if(!b.empty())dos=b.back();
-    if(!c.empty())tres=c.back();
-
-    if(uno>dos && uno>tres)a.pop_back();
-    if(dos>uno && dos>tres)b.pop_back();
-    if(tres>uno && tres>dos)c.pop_back();
-
-}
-
 bool calc(int k){
-    deque<ll> uno,dos,tres;
+    if(k==1 || k==0 || k==2)return true;
+    deque<ll> cero,uno,dos;
     ll a = s-2;
-    forn(i,k){
-        if(c[i]%3==0)uno.pb(c[i]);
-        if(c[i]%3==1)dos.pb(c[i]);
-        if(c[i]%3==2)tres.pb(c[i]);
+    forn(i,k-2){
+        if(c[i]%3==0)cero.pb(c[i]);
+        if(c[i]%3==1)uno.pb(c[i]);
+        if(c[i]%3==2)dos.pb(c[i]);
     }
-    
-    may(uno,dos,tres);
-    may(uno,dos,tres);
   
-    forn(i,uno.size()){
-        a = a - (uno[i]/3);
+    while(cero.size()>0){
+        a = a - (cero.front()/3);
+        cero.pop_front();
+        if(a<0) return false;
     }
     
-    while(dos.size()>0 && tres.size()>0){
-        a = a - ((dos.front()+tres.front()+2)/3);
+    while(uno.size()>0 && dos.size()>0){
+        a = a - ((uno.front()+dos.front()+2)/3);
+        uno.pop_front();
         dos.pop_front();
-        tres.pop_front();
+        if(a<0) return false;
+    }
+    while(uno.size()>0){
+        if(uno.size()>=2){
+            a = a - ((uno[0]+uno[1]+2)/3);
+            uno.pop_front();
+            uno.pop_front();
+        }else{
+            a = a - ((uno.front()+2)/3);
+            uno.pop_front();
+        }
+        if(a<0) return false;
     }
     while(dos.size()>0){
-        if(dos.size()>=2){
-            a = a - ((dos.front()+dos.front()+2)/3);
-            dos.pop_front();
-            dos.pop_front();
-        }else{
-            a = a - ((dos.front()+2)/3);
-            dos.pop_front();
-        }
-    }
-    while(tres.size()>0){
-        a = a - ((tres.front()+2)/3);
-        tres.pop_front();
+        a = a - ((dos.front()+2)/3);
+        dos.pop_front();
+        if(a<0) return false;
     }
 
     if(a<0) return false;
