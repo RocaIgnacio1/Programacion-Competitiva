@@ -63,6 +63,13 @@ struct Hash{
         h1=(h1 + c2*primos[1][i])%MOD[1];
         return (h0<<32)|h1;
     }
+
+    void set_change(int s, int e, int i, int c1, int c2) {
+        for (int k = 0; k < 2; ++k) {
+            h[k][e] = (h[k][e] - c1 * primos[k][i] % MOD[k] + MOD[k]) % MOD[k];
+            h[k][e] = (h[k][e] + c2 * primos[k][i]) % MOD[k];
+        }
+    }
 };
 
 
