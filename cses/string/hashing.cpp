@@ -14,7 +14,6 @@ typedef long long ll;
 #else
 //judge
 #endif
-
 #define forr(i,s,n) for(int i=s; i<n; i++)
 struct Hash{
     int P=1777771, MOD[2], PI[2];
@@ -76,41 +75,34 @@ int main(){
     cout.tie(NULL);
 
 
-    int n;
-    cin >> n;
     string s;
     cin >> s;
-    int r, m;
-    cin >> r >> m;
 
-    unordered_map<ll,ll> tabla;
-    string abecedario = "abcdefghijklmnopqrstuvwxyz,._";
-    forn(i,r){
-        string palabra;
-        cin >> palabra;
-        Hash p(palabra);
-        tabla[p.get(0,palabra.size())]++;
+    // para hashaer un string.
+    Hash hashObj(s);
 
-        forn(j,m){
-            forn(k, abecedario.size()){
-                if(palabra[j] == abecedario[k])continue;
-                tabla[p.get_change(0, m , j, palabra[j], abecedario[k])]++;
-            }
-        }
+    // obtener un hash de un substring de s. Devuelve un ll que representa el hash del segmento.
+    ll hashSegment = hashObj.get(0, 5);
 
-    }
 
-    Hash secuencia(s);
-    ll ans = 0;
-    for(int i=0 ; i+m <= s.size() ; i++){
-        ll valor = secuencia.get(i,i+m);
+    cout << "Hash string: " << hashObj.get(0,s.size()) << endl;
+    cout << "Hash substring: " << hashObj.get(0,4) << endl;
 
-        if(tabla.count(valor)>0){
-            ans += tabla[valor];
-        }
-    }
-    cout << ans << endl;
+    string a = "hola", b = "hola";
+    Hash h1(a);
+    Hash h2(b);
+    cout << "Hash substring: " << h1.get(0,a.size()) << endl;
+    cout << "Hash substring: " << h2.get(0,b.size()) << endl;
+
+    // tabla hash
+    unordered_map<ll, int> hashTable;
+    string p = "hola", q = "hola";
+    hashTable[hashObj.get(0,p.size())]++;
+    hashTable[hashObj.get(0,q.size())]++;
     
+    for(auto i: hashTable){
+        cout << i.first << " " << i.second << endl;
+    }
 
     return 0;
 }

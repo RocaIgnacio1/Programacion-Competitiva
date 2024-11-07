@@ -17,16 +17,22 @@ typedef long long ll;
 int n, k;
 map<vector<int>,int> compus;
 
-void subconjuntos(vector<int> &aux, vector<int> &nuevo, int pos, set<vector<int>> &temporal) {
-    if (!nuevo.empty()) {
-        temporal.insert(nuevo);
-    }
-    
-    for(int i=pos ; i<aux.size() ; i++) {
-        nuevo.push_back(aux[i]);  
-        subconjuntos(aux, nuevo, i+1, temporal); 
-        nuevo.pop_back(); 
-    }
+void subconjuntos(vector<int> &nums, vector<int> &vacio, int pos, bool condicion) {
+   if(pos==nums.size()){
+        if(condicion)compus[vacio]++;
+        else{
+            compus[vacio]--;
+            if(compus.count(vacio)==0)compus.erase(vacio);
+        }
+        return;
+   }
+
+   vacio.pb(nums[pos]);
+   subconjuntos(nums, vacio, pos+1, condicion);
+   vacio.pop_back();
+   while(pos<nums.size()-1 && nums[pos+1]==nums[pos])pos++;
+   subconjuntos(nums, vacio, pos+1, condicion);
+
 }
 
 
@@ -41,6 +47,7 @@ int main(){
    
 
     cin >> n >> k;
+    int maquina = 1;
     map<int,vector<int>> cola;
 
     forn(i,n){
@@ -50,46 +57,41 @@ int main(){
         if(a == 'C'){
             int r;
             cin >> r;
-            vector<int> actual;
-            vector<int> vacio;
+            vector<int> nums;
             forn(j,r){
                 int v;
                 cin >> v;
-                actual.pb(v);
+                nums.pb(v);
             }
-            sort(actual.begin(),actual.end());
-            cola[cola.size()+1] = actual;
-            set<vector<int>> temporal;
-            subconjuntos(actual, vacio, 0, temporal);
+            sort(nums.begin(),nums.end());
+            cola[maquina] = nums;
+            maquina++;
 
-            for(auto i: temporal){
-                compus[i]++; 
-            }
+            vector<int> temporal;
+            subconjuntos(nums, temporal, 0, true);
+
+            
         }else{
             if(a == 'D'){
                 int p;
                 cin >> p;
-                vector<int> vacio;
-                set<vector<int>> temporal;
-                subconjuntos(cola[p],vacio, 0, temporal);
-
-                for(auto i: temporal){
-                    compus[i]--; 
-                    if(compus.count(i)==0) compus.erase(i);
-                }
+                vector<int> temporal;
+                vector<int> nums = cola[p];
+                subconjuntos(nums, temporal, 0, false);
                 cola.erase(p);
             }else{
                 int r;
                 cin >> r;
-                vector<int> actual;
+                vector<int> nums;
                 forn(j,r){
                     int v;
                     cin >> v;
-                    actual.pb(v);
+                    nums.pb(v);
                 }
-                sort(actual.begin(),actual.end());
-                if(compus.count(actual)>0){
-                    cout << compus[actual] << endl;
+                sort(nums.begin(),nums.end());
+                
+                if(compus.count(nums)>0){
+                    cout << compus[nums] << endl;
                 }else cout << 0 << endl;
                 
             }
@@ -101,8 +103,11 @@ int main(){
                     cout << a << " ";
                 }
                 cout << " cantidad:" << i.second << endl;
-            }
+        }
         */
+        
+        
+        
     }
 
     

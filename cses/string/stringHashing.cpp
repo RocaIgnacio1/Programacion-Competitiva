@@ -14,7 +14,6 @@ typedef long long ll;
 #else
 //judge
 #endif
-
 #define forr(i,s,n) for(int i=s; i<n; i++)
 struct Hash{
     int P=1777771, MOD[2], PI[2];
@@ -66,7 +65,6 @@ struct Hash{
 };
 
 
-
 int main(){
     #ifdef EBUG
         freopen("input.txt", "r", stdin);
@@ -76,41 +74,16 @@ int main(){
     cout.tie(NULL);
 
 
-    int n;
-    cin >> n;
-    string s;
-    cin >> s;
-    int r, m;
-    cin >> r >> m;
-
-    unordered_map<ll,ll> tabla;
-    string abecedario = "abcdefghijklmnopqrstuvwxyz,._";
-    forn(i,r){
-        string palabra;
-        cin >> palabra;
-        Hash p(palabra);
-        tabla[p.get(0,palabra.size())]++;
-
-        forn(j,m){
-            forn(k, abecedario.size()){
-                if(palabra[j] == abecedario[k])continue;
-                tabla[p.get_change(0, m , j, palabra[j], abecedario[k])]++;
-            }
-        }
-
-    }
-
-    Hash secuencia(s);
+    string a, b;
+    cin >> a >> b;
+    Hash s(a);
+    Hash p(b);
+    ll valor = p.get(0,b.size());
     ll ans = 0;
-    for(int i=0 ; i+m <= s.size() ; i++){
-        ll valor = secuencia.get(i,i+m);
-
-        if(tabla.count(valor)>0){
-            ans += tabla[valor];
-        }
+    for(int i = 0 ; (i+b.size()) <= a.size() ; i++){
+        if( s.get(i,b.size()+i) == valor)ans++;
     }
     cout << ans << endl;
-    
 
     return 0;
 }

@@ -8,19 +8,18 @@ using namespace std;
 #define fora(p, i,n) for(ll i = p; i < n; i++)
 #define pb push_back
 typedef long long ll;
-#define MAXN 1000000010
+//#define MAXN 1000000010
 #ifdef EBUG
 //local
 #else
 //judge
 #endif
-
 #define forr(i,s,n) for(int i=s; i<n; i++)
 struct Hash{
     int P=1777771, MOD[2], PI[2];
     vector<int> h[2], pi[2];
     vector<ll> primos[2];
-    Hash(string& s){
+    Hash(vector<int>& s){
         MOD[0]=999727999; MOD[1]=1070777777;
         PI[0]=325255434; PI[1]=10018302;
         forr(k,0,2){
@@ -63,8 +62,14 @@ struct Hash{
         h1=(h1 + c2*primos[1][i])%MOD[1];
         return (h0<<32)|h1;
     }
+ 
+    void set_change(int s, int e, int i, int c1, int c2) {
+        for (int k = 0; k < 2; ++k) {
+            h[k][e] = (h[k][e] - c1 * primos[k][i] % MOD[k] + MOD[k]) % MOD[k];
+            h[k][e] = (h[k][e] + c2 * primos[k][i]) % MOD[k];
+        }
+    }
 };
-
 
 
 int main(){
@@ -75,42 +80,54 @@ int main(){
     cin.tie(NULL);
     cout.tie(NULL);
 
-
-    int n;
-    cin >> n;
-    string s;
-    cin >> s;
-    int r, m;
-    cin >> r >> m;
-
-    unordered_map<ll,ll> tabla;
-    string abecedario = "abcdefghijklmnopqrstuvwxyz,._";
-    forn(i,r){
-        string palabra;
-        cin >> palabra;
-        Hash p(palabra);
-        tabla[p.get(0,palabra.size())]++;
-
-        forn(j,m){
-            forn(k, abecedario.size()){
-                if(palabra[j] == abecedario[k])continue;
-                tabla[p.get_change(0, m , j, palabra[j], abecedario[k])]++;
-            }
-        }
-
+    int n, k;
+    cin >> n >> k;
+    vector<int> c(n);
+    forn(i,n){
+        cin >> c[i];
     }
-
-    Hash secuencia(s);
-    ll ans = 0;
-    for(int i=0 ; i+m <= s.size() ; i++){
-        ll valor = secuencia.get(i,i+m);
-
-        if(tabla.count(valor)>0){
-            ans += tabla[valor];
+    if(k>n){
+        cout << 0 << endl;
+        return 0;
+    }
+    
+    vector<ll> normales((n/k)+1);
+    forn(i,normales.size()){
+        if(i==0)normales[i]=0;
+        else{
+            vector<int> q(k+1,i);
+            q[0]=0;
+            Hash normalHash(q);
+            normales[i] = normalHash.get(0,k+1);
+        }
+    }
+   
+    vector<int> prefix(k+1,0);
+    vector<int> kas(k+1,0);
+    map<ll,vector<int>> tabla;
+    Hash hashval(prefix);
+    int cont=1;
+    
+    forn(i,n){
+        prefix[c[i]]++;
+        kas[prefix[c[i]]]++;
+        if(kas[cont]==k) cont++;
+        hashval.set_change(0, k+1, c[i], prefix[c[i]]-1, prefix[c[i]]);
+        ll a = hashval.get(0,k+1) - (normales[cont-1]);
+        tabla[a].pb(i);
+    }
+    
+    if(n%k==0 && kas[n/k]==k){
+        cout << n << endl;
+        return 0;
+    }
+    int ans=0;
+    for(auto i: tabla){
+        if(i.second.size()>1){
+            ans = max(ans, i.second[i.second.size()-1]-i.second[0]);
         }
     }
     cout << ans << endl;
-    
 
     return 0;
 }
