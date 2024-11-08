@@ -5,6 +5,7 @@
 using namespace std;
 #define forn(i,n) for(ll i = 0; i < n; i++)
 #define fora(p, i,n) for(ll i = p; i < n; i++)
+#define dforn(i,n) for(int i=n-1; i>=0; i--)
 #define pb push_back
 typedef long long ll;
 #ifdef EBUG
@@ -18,37 +19,36 @@ const int MOD = 1e9+7;
 ll k, l;
 int N;
 vector<vector<ll>> times;
-vector<int> dists;
+vector<ll> dists;
 
-int bs_min(vector<ll> &v, int val){
+int bs_min(vector<ll> &v, ll val){
     int l = 0, r = v.size() - 1, mid = (l+r)/2;
     while(l <= r){
-        if(val <= v[mid]){
+        if(val < v[mid]){
             r = mid - 1;
         }else{
             l = mid + 1;
         }
         mid = (l+r)/2;
     }
-    if(val <= v[mid]){
+    if(val < v[mid]){
         mid --;
     }
 
-    //if (mid < 0) return 0;
     return mid;
 }
 
-int bs_max(vector<ll> &v, int val){
+int bs_max(vector<ll> &v, ll val){
     int l = 0, r = v.size() - 1, mid = (l+r)/2;
-    while(l <= r){
-        if(val >= v[mid]){
+    while(l < r){
+        if(val > v[mid]){
             l = mid + 1;
         }else{
             r = mid - 1;
         }
         mid = (l+r)/2;
     }
-    if(val >= v[mid]){
+    if(val > v[mid]){
         mid ++;
     }
 
@@ -57,20 +57,20 @@ int bs_max(vector<ll> &v, int val){
 }
 
 ll dp[10005][755];
-ll solve(int p, int n){
-    //cout << "p: " << p << " n: " << n << " " << dp[p][n] << endl;
-    if (dp[p][n] != -1) return dp[p][n];
-    if (p == N-1) return dp[p][n] = 1;
-
-    int men = bs_min(times[n], dists[p]-l);
-    int may = bs_max(times[n], dists[p]+l);
-
-    ll acum = 0;
-    for(int i = men+1; i < may; i++){
-        if(dp[p+1][i] != -1) acum += dp[p+1][i];
-        else acum += (solve(p+1, i) % MOD);
-    }
-    return dp[p][n] = acum % MOD;
+void calc(int p, int i){
+    int men = bs_min(times[i], dists[p]-l-1);
+    int may = bs_min(times[i], dists[p]+l)+1;
+    if(may > men+1){ dp[p][i] = may - men - 1;return;}
+    dp[p][i] = 0;
+    return;
+}
+void calc2(int p, int i){
+    int men = bs_min(times[i], dists[p]-l-1);
+    int may = bs_min(times[i], dists[p]+l)+1;
+    //cout << p << " " << i << " " << may << " " << men<< endl;
+    if(may > men+1){dp[p][i] = dp[p+1][may-1] - ((men>-1)?dp[p+1][men]:0);return;}
+    dp[p][i] = 0;
+    return;
 }
 
 int main(){
@@ -96,30 +96,37 @@ int main(){
     }
     cin >> N;
     forn(i, N-1){
-        int p;
+        ll p;
         cin >> p;
         dists.push_back(p);
     }
 
-    forn(j, k){
+    /*forn(j, k){
         cout << j << ": ";
-        cout << bs_min(times[j], 3) << ' ' << bs_max(times[j], 3) << endl; 
-    }
+        cout << bs_min(times[j], 2) << ' ' << bs_max(times[j], 1) << endl; 
+    }*/
 
-    ll ans = 0;
-    forn(i, k){
-        ans += (solve(0, i) % MOD);
+    dforn(i, N-1){
+        forn(j, k){
+            if(i == N-2) calc(i, j);
+            else calc2(i, j);
+        }
+        ll acum = 0;
+        forn(j, k){
+            acum += dp[i][j] + MOD;
+            acum %= MOD;
+            dp[i][j] = acum;
+        }
     }
-    cout << ans % MOD << '\n';
-    /*
-    forn(i, k){
-        forn(j, N-1){
+    cout << dp[0][k-1] << endl;
+
+/*
+    forn(j, k){
+        forn(i, N-1){
             cout << dp[i][j] << '\t';
         }
         cout << endl;
     }
-
-    
     vector<ll> aux = {3,4,5,19,20};
     forn(i,aux.size()){
         cout << aux[i] << " ";
