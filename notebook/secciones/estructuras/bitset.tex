@@ -1,0 +1,37 @@
+\begin{center}
+    \begin{tabular}{||l|l|l||}
+    \hline
+    \textbf{Función}    & \textbf{Explicación}          & \textbf{O} \\ \hline
+
+    \textbf{Template parameters} & & \\ \hline
+        N               & número de bits             & O(1) \\ \hline
+
+    \textbf{Member functions} & & \\ \hline
+    (constructor) & construye el `bitset` & O(N) \\ \hline
+
+    \textbf{Element access} & & \\ \hline
+    operator[]          & accede a un bit específico    & O(1) \\ \hline
+    all, any, none      & todos, algún o ningún bit está en true  & O(N) \\ \hline
+    count               & número de bits establecidos en true     & O(N) \\ \hline
+    size                & número de bits que contiene & O(1) \\ \hline
+
+    \textbf{Modifiers} & & \\ \hline
+        operator\&=  & & \\
+        operator|= & & \\
+        operator\textasciicircum= & & \\
+        operator\textasciitilde= & & \\
+        operator<<= & & \\
+        operator>>= & & \\
+        operator<< & & \\
+        operator>> & & O(N) \\ \hline
+        set() & pone todos los bits en el valor dado        & O(N) \\
+        set(int pos) &                                      & O(1) \\ \hline
+        reset() & establece bits en `false`                 & O(N) \\
+        reset(int pos) &                                    & O(1) \\ \hline
+        flip() & alterna los valores de los bits            & O(N) \\
+        flip(int pos) & &O(1) \\ \hline
+
+    \textbf{Conversions} & & \\ \hline
+    to\_string & representación en cadena
+    \end{tabular}
+\end{center}

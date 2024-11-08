@@ -15,11 +15,13 @@ bool sortbysec(const pair<int,int> &a, const pair<int,int> &b){
 sort(v.begin(), v.end(), sortbysec);
 \end{lstlisting}
 \subsection{Cout para doubles}
-\lstinputlisting[language=C++]{secciones/utils/cout.cpp}
+\begin{lstlisting}[language=C++]
+cout << fixed << setprecision(20) << ans << endl;
+\end{lstlisting}
 \subsection{Longest increasing subsequence}
 \lstinputlisting[language=C++]{secciones/utils/lis.cpp}
-
-\subsection{Prev Permutation}
-\lstinputlisting[language=C++]{secciones/utils/prevpermutation.cpp}
-
+\subsection{MO}
+\lstinputlisting[language=C++]{secciones/utils/mo.cpp}
 \newpage
+
+
