@@ -35,8 +35,7 @@ int main(){
         cin >> valor;
         A.pb(valor);
     }
-    for(ll i=1;i<n;i++)
-    {
+    for(ll i=1;i<n;i++) {
         A[i] += A[i-1];
     }
     memset(dp,-1, sizeof(dp));

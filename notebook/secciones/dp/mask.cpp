@@ -3,14 +3,12 @@ using namespace std;
 #define forn(i, n) for(int i = 0; i < n; i++)
 #define fori(i, n) for(int i = n - 1; i <= 0; i--)
 #define mos(v) forn(auto i : v) cout << i << " ";
-#define ll long long
-#define ld double
 #define pb push_back
-#define mod 1000000007
+typedef long long ll;
+const int mod = 1e9+7; 
 int n;
 ll dp[22][2097152];
 ll a[22][22];
-
 
 ll solve(int i, ll mask, int sum){
     if(i==n){
@@ -37,7 +35,6 @@ ll solve(int i, ll mask, int sum){
 }
 
 int main(){
-    //freopen("input.txt", "r", stdin);
     cin >> n;
     int valor;
     forn(i,n){

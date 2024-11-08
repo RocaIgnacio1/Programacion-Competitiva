@@ -34,11 +34,24 @@ El algoritmo es capaz de detectar ciclos negativos. Para eso Se debe correr una 
 \newpage
 
 \subsubsection{Dijkstra}
-El algorimo necesita que todos los pesos sean > 0 \\
+El algorimo necesita que todos los pesos sean \> 0 \\
 \textbf{Complejidad = O(n + m log m)}
 \lstinputlisting[language=C++]{secciones/grafos/dijkstra.cpp}
 \newpage
 \subsubsection{Floyd-Warshall}
 \lstinputlisting[language=C++]{secciones/grafos/floyd.cpp}
+
+\newpage
+\subsection{Spanning Tree}
+\subsubsection{UnionFind}
+\lstinputlisting[language=C++]{secciones/grafos/union_find.cpp}
+
+Tambien podemos guardar el tamaño de los sets: 
+\lstinputlisting[language=C++]{secciones/grafos/union_find_with_size.cpp}
+\subsubsection{Kruskal}
+Obtener el spanning tree de costo minimo dado un grafo ponderado no dirigido
+\lstinputlisting[language=C++]{secciones/grafos/kruskal.cpp}
+
+\input{./secciones/grafos/aplicaciones/aplicaciones.tex}
 
 \newpage

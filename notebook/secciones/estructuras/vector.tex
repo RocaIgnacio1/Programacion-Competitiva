@@ -49,7 +49,7 @@ for (auto& x: myvector)
 
 \subsubsection{resize}
 Resizes the container so that it contains n elements. \\
-\lstinline[language=C++]{void resize (size_type n, const value_type& val);}
+\lstinline[language=C++]{void resize(size_type n, const value_type& val);} \\
 \begin{lstlisting}[language=C++]
 vector<int> myvector;
 for (int i=1; i<10; i++) myvector.push_back(i);
@@ -65,7 +65,7 @@ for (int i=0;i<myvector.size();i++)
 
 \subsubsection{assign}
 Assigns new contents to the vector, replacing its current contents, and modifying its size accordingly. \\
-\lstinline[language=C++]{void assign (size_type n, const value_type& val);
+\lstinline[language=C++]{void assign(size_type n, const value_type& val);} \\
 
 \begin{lstlisting}[language=C++]
 vector<int> first;

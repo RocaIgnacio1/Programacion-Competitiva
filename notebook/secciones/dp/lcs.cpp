@@ -13,7 +13,6 @@ string s,t;
 int dp[3000][3000];
 
 int subsecuencia(int i, int j){
-
     if( i == s.size() || j == t.size() ) return 0; 
 
     if( dp[i][j] != -1 ) return dp[i][j];
@@ -28,7 +27,6 @@ int subsecuencia(int i, int j){
     }
 }
 
-
 string respuesta = "";
 void sol(int i, int j){
     if(i == s.size() || j == t.size() ) return;
@@ -42,8 +40,6 @@ void sol(int i, int j){
 }
 
 int main(){
-    
-    //freopen("input.txt", "r", stdin);
     cin >> s >> t;
     memset(dp, -1, sizeof(dp));
     
