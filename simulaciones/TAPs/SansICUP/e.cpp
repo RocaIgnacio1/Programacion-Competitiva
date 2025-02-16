@@ -1,53 +1,47 @@
-#include <algorithm>
 #include <bits/stdc++.h>
 using namespace std;
 #define forn(i,n) for(int i = 0; i < n; i++)
 #define fori(i,n) for(int i = n-1; i >= 0; i--)
 
-typedef long long ll;
-
 int main(){
-    ll N, S, K;
+    int N, S, K;
     vector<int> A;
     cin >> S >> N >> K;
-    ll ans = N/S;
+
+    int cols = 0;
 
     for (int i = 0; i < K; i++) {
         int a;
         cin >> a;
         A.push_back(a);
     }
-    sort(A.begin(), A.end());
-    reverse(A.begin(), A.end());
 
-    for (auto i = A.begin(); i != A.end();) {
-        bool borrado = false;
-        for (auto j = i+1; j != A.end(); ++j) {
-            /*cout << *i << "%" << *j << endl;*/
-            if (*i % *j == 0) {
-                /*cout << "borrar " << *i << endl;*/
-                i = A.erase(i);
-                borrado = true;
-                break;
+    for (int mask = 1; mask < (1 << K); ++mask) {
+        vector<int> subset;
+        for (int i = 0; i < K; ++i) {
+            if (mask & (1 << i)) {
+                subset.push_back(A[i]);
             }
         }
-        if (!borrado) {
-            ++i;
+        
+        // lcm of all the subset
+        long long current_lcm = S;
+        for (int num : subset) {
+            current_lcm = lcm(current_lcm, num);
+            if (current_lcm > N) {
+                break;
+            }
+        }        
+
+        int m = subset.size();
+        long long count = N / current_lcm;
+        if (m % 2 == 1) {
+            cols += count;
+        } else {
+            cols -= count;
         }
     }
-    /*for (auto a : A) {*/
-    /*    cout << a << " ";*/
-    /*}*/
-    /*cout << endl;*/
 
-    for (auto a : A) {
-        ll m = lcm(S, a);
-        /*cout << S << " " << m << "=" << m << endl;*/
-        ans -= N/m;
-        if (ans == 0) {
-            break;
-        }
-    }
-
-    cout << ans << endl;
+    int total = N/S;
+    cout << total - cols << endl;
 }
