@@ -19,7 +19,7 @@ geometria:
 data structures:
 - [ ] strings:
 - [ ] z function
-- [ ] hashing
+- [x] hashing
 - [ ] manacher
 
 grafos:
