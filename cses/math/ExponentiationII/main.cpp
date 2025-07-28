@@ -7,17 +7,18 @@ using namespace std;
 typedef long long ll;
 const int MOD = 1e9+7;
 
-ll modpow(ll x, ll n){
+ll modpow(ll x, ll n, ll mod){
     if (n == 0) return 1;
-    ll p = modpow(x, n/2);
-    p = (p*p)%MOD;
-    if (n%2 != 0) p = (p*x)%MOD;
+    ll p = modpow(x, n/2, mod);
+    p = (p*p)%mod;
+    if (n%2 != 0) p = (p*x)%mod;
     return p;
 }
 
 ll modpowpow(ll a, ll b, ll c){
-    ll exp = modpow(b, c);
-    return modpow(a, exp);
+    ll exp = modpow(b, c, MOD - 1);
+    // teorema de Euler
+    return modpow(a, exp, MOD);
 }
 
 int main(){
