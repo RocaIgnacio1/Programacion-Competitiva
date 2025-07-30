@@ -14,7 +14,7 @@ map<int, int> factors(int n) {
             n /= x;
         }
     }
-    if (n > 1) f[x]++;
+    if (n > 1) f[n]++;
     return f;
 }
 
