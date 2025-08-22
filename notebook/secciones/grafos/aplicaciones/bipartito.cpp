@@ -14,22 +14,21 @@ int main(){
     vector<vector<int>> G(n);
 
     queue<int> q;
-    vector<bool> color(n, false);
-    vector<bool> visited(n, false);
+    vector<int> color(n, -1);
 
     forn(i, n){
-        if (visited[i]) continue;
-        q.push(i);
+        if (color[i] != -1) continue;
+
+        q.push(i); color[i] = 0;
         while(!q.empty()){
             int n = q.front(); q.pop();
-            visited[n] = true;
 
             for (int adj : G[n]) {
-                if (!visited[adj]){
-                    color[adj] = !color[n];
+                if (color[adj] == -1){
+                    color[adj] = color[n] ^ 1; // invertir, si es 1 => 0, 0 => 1
                     q.push(adj);
                 }else if (color[adj] == color[n]){
-                    cout << "IMPOSSIBLE\n";
+                    cout << "IMPOSSIBLE\n"; // no es bipartito
                     return 0;
                 }
             }

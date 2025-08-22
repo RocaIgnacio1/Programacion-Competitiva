@@ -2,23 +2,18 @@
 #define forr(i, a, b) for (int i = (a); i < (b); i++)
 #define forn(i, n) forr(i, 0, n)
 #define dforn(i, n) for (int i = (n) - 1; i >= 0; i--)
-#define forall(it, v) for (auto it = v.begin(); it != v.end(); it++)
-
-#ifdef EBUG
-// local
-#else
-// judge
-#endif
+#define all(v) v.begin(), v.end()
+#define dbg(v) cerr << #v << ": " << v;
+#define HOLA ios::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 
 using namespace std;
+typedef long long ll;
+typedef pair<int, int> ii;
 
 int main() {
-#ifdef EBUG
-    freopen("input.txt", "r", stdin);
-#endif
-
-    ios::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+    HOLA
+    #ifdef EBUG
+        freopen("<ej>.txt", "r", stdin);
+    #endif
     return 0;
 }
