@@ -1,11 +1,20 @@
 #include <bits/stdc++.h>
-#define ll long long
 using namespace std;
+#define ll long long
+#define dforn(i,n) for(int i=n-1; i>=0; i--)
+#define forn(i, n) for(int i = 0; i < n; i++)
+#define fori(i, n) for(int i = n - 1; i <= 0; i--)
+#define forall(it, v) for (auto it = v.begin(); it != v.end(); it++)
+#define forr(i, a, b) for (int i = (a); i < (b); i++)
+#define sz(v) (int(v.size()))
+#define pb push_back
+
 
 // si la entrada es entero cambiar a long long.
 typedef long long T; // double could be faster but less precise
 typedef long double ld;
-const T EPS = 1e-9; // if T is integer, set to 0
+//const T EPS = 1e-9; // if T is integer, set to 0
+const T EPS = 0; // if T is integer, set to 0
 const T INF = 1e18;
 
 struct pto{
@@ -56,15 +65,38 @@ struct pto{
 		return x < b.x-EPS || (abs(x - b.x) <= EPS && y < b.y-EPS);
 	}
 	bool operator==(pto b){ return abs(x-b.x)<=EPS && abs(y-b.y)<=EPS; }
-
 };
-pto perp(pto a) {return pto(-a.y, a.x);}
 
-ld angle(pto a, pto o, pto b) {
-	pto oa = a-o, ob = b-o;
-	return atan2l(oa^ob, oa*ob);
+ll area(vector<pto> &p){//O(p.size())
+	ll area=0;
+	forn(i, p.size()) area+=p[i]^p[(i+1)%p.size()];
+	//if points are in clockwise order then area is negative
+	return abs(area)/2;
+	// si los puntos son enteros abs(area) es siempre entero
 }
-ld angle(pto a, pto b) { // smallest angle bewteen a and b
-	ld cost = (a*b) / a.norm() / b.norm();
-	return acosl(max(ld(-1.), min(ld(1.), cost)));
+
+
+int main(){
+    #ifdef EBUG
+        freopen("input.txt", "r", stdin);
+    #endif
+    ios :: sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    
+    int n;
+    cin >> n;
+    vector<pto> a(n);
+    forn(i,n){
+        cin >> a[i].x >> a[i].y ;
+    }
+    ll B=0;
+    forn(i,n){
+        B += __gcd(abs(a[i].x - a[(i+1)%n].x), abs(a[i].y - a[(i+1)%n].y));
+    }
+    ll A = area(a);
+
+    cout << (A-(B/2)+1) << " " << B << endl;
+
+    return 0;
 }

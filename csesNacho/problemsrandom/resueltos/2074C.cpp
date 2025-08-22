@@ -16,10 +16,32 @@ int main(){
     cin.tie(NULL);
     cout.tie(NULL);
     
+
+    vector<ll>pot;
+    ll s=1;
+    while(s<10000000000){
+        pot.push_back(s);
+        s*=2;
+    }
+
+    cout << endl;
     int tt;
     cin >> tt;
     while(tt--){
-       
+        ll x,y;
+        cin >> x;
+        forn(i,pot.size()){
+            if(pot[i]>x){
+                y = pot[i-1]-1;
+                break;
+            }
+        }
+        ll xy=x^y;
+        if(x+y>xy && x+xy>y && xy+y>x){
+            cout << y << endl;
+            continue;
+        }
+        cout << -1 << endl;
     }
 
     return 0;

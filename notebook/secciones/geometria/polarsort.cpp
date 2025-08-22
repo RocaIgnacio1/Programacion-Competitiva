@@ -1,3 +1,5 @@
+#include "pto.cpp"
+
 /*
 funcionamiento:
     vector<pto> puntos = {pto(1, 2), pto(2, 1), pto(-1, -1), pto(0, 2)};
