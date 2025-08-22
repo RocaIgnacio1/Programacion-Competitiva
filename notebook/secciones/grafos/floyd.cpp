@@ -5,8 +5,7 @@
 int dist[MAX_N][MAX_N]; //Distancia de i a j
 
 // llenar la matriz de adjayencia
-// tmb se podría armar a medida que lees la entrada
-// tmb se podría armar a medida que lees la entrada
+// tmb se podria armar a medida que lees la entrada
 for (int i = 1; i <= n; i++) {
     for (int j = 1; j <= n; j++) {
         if (i == j) dist[i][j] = 0;

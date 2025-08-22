@@ -65,7 +65,7 @@ map<ll, ll> fact_sqrt(int n) {
 
 // factoriza bien numeros hasta MAXP^2
 // O (cant primos)
-// esta se podría hacer con la otra criba
+// esta se podria hacer con la otra criba
 map<ll,ll> fact(ll n) {
 	map<ll,ll> ret; // factor, cantidad de veces
 	for(auto p : primos){

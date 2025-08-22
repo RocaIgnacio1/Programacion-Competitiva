@@ -1,6 +1,12 @@
 % Note: this need to be compiled twice! 
 \documentclass[11pt,twocolumn,landscape,a4paper,notitlepage]{article}
 
+% Codificación primero
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[main=spanish]{babel}
+\UseRawInputEncoding
+
 % Packages
 \usepackage{calc}			% for length arithmetic.
 \usepackage[twocolumn, top=1.0cm, bottom=1.0cm, left=1.0cm, right=1.0cm, voffset=0cm, hoffset=0cm, headsep=0.2cm, headheight=13.6pt, footskip=\headsep + \headheight, columnsep=1.25cm]{geometry}
@@ -98,10 +104,11 @@
 \title{Notebook}
 \date{2024}
 
-
 \begin{document}
 \maketitle
-\centering{\includegraphics[width=12cm]{portada}}\newpage
+\centering{\includegraphics[width=12cm]{portada}}
+\newpage
+\newpage
 \tableofcontents
 \newpage
 
