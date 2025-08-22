@@ -16,3 +16,9 @@ Somos un equipo de estudiantes de la UTN Regional Rosario apasionados por la pro
 > + recursos: Aquí almacenamos recursos útiles como libros, tutoriales, y enlaces a plataformas de práctica.
 > + herramientas: Contiene herramientas que utilizamos para mejorar nuestras habilidades de programación competitiva, como scripts de automatizacion, plantillas, etc.
 
+
+## Fuentes
+> El diego: https://github.com/vmartinv/eldiego/
+> La pandilla: https://github.com/francoderico/la-pandilla/reconstruct.cpp
+> https://cp-algorithms.com/index.html
+
