@@ -91,6 +91,8 @@ struct RMQ{
 	void alterar(Alt val, int i, int j){alterar(val,i,j,1,0,sz);}
 }rmq;
 
-
-mx.init(v.size()); forn(i, v.size()) mx[i] = v[i]; mx.updall();
+void inicializate(){
+	vector<Elem> v;
+	mx.init(v.size()); forn(i, v.size()) rmq[i] = v[i]; mx.updall();
+}
 
