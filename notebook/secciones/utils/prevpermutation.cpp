@@ -5,7 +5,7 @@ int main () {
     vector<bool> mask(dias.size(), false);
     //combinaciones de D elementos.
     int d = 3;
-    fill(mask.begin(), mask.begin() + d, true);
+    fill(mask.begin(), mask.begin() + d, true); //1110000
    
     do {
         for (int i = 0; i < dias.size(); ++i) {
