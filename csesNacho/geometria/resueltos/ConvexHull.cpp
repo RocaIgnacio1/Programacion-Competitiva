@@ -1,11 +1,19 @@
 #include <bits/stdc++.h>
-#define ll long long
 using namespace std;
+#define ll long long
+#define dforn(i,n) for(int i=n-1; i>=0; i--)
+#define forn(i, n) for(int i = 0; i < n; i++)
+#define fori(i, n) for(int i = n - 1; i <= 0; i--)
+#define forall(it, v) for (auto it = v.begin(); it != v.end(); it++)
+#define forr(i, a, b) for (int i = (a); i < (b); i++)
+#define sz(v) (int(v.size()))
+#define pb push_back
 
 // si la entrada es entero cambiar a long long.
 typedef long long T; // double could be faster but less precise
 typedef long double ld;
-const T EPS = 1e-9; // if T is integer, set to 0
+//const T EPS = 1e-9; // if T is integer, set to 0
+const T EPS = 0; // if T is integer, set to 0
 const T INF = 1e18;
 
 struct pto{
@@ -56,15 +64,50 @@ struct pto{
 		return x < b.x-EPS || (abs(x - b.x) <= EPS && y < b.y-EPS);
 	}
 	bool operator==(pto b){ return abs(x-b.x)<=EPS && abs(y-b.y)<=EPS; }
-
 };
-pto perp(pto a) {return pto(-a.y, a.x);}
 
-ld angle(pto a, pto o, pto b) {
-	pto oa = a-o, ob = b-o;
-	return atan2l(oa^ob, oa*ob);
+vector<pto> CH(vector<pto>& p) {
+    if (p.size() < 3) return p;  // edge case, keep line or point
+    vector<pto> ch;
+    sort(p.begin(), p.end());
+    forn(i, p.size()) {  // lower hull
+        while (ch.size() >= 2 && ch[ch.size() - 1].left(ch[ch.size() - 2], p[i]))
+            ch.pop_back();
+        ch.pb(p[i]);
+    }
+    ch.pop_back();
+    int k = ch.size();
+    dforn(i, p.size()) {  // upper hull
+        while (ch.size() >= k + 2 && ch[ch.size() - 1].left(ch[ch.size() - 2], p[i]))
+            ch.pop_back();
+        ch.pb(p[i]);
+    }
+    ch.pop_back();
+    return ch;
 }
-ld angle(pto a, pto b) { // smallest angle bewteen a and b
-	ld cost = (a*b) / a.norm() / b.norm();
-	return acosl(max(ld(-1.), min(ld(1.), cost)));
+
+int main(){
+    #ifdef EBUG
+        freopen("input.txt", "r", stdin);
+    #endif
+    ios :: sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    
+    int tt;
+    cin >> tt;
+    vector<pto> puntos;
+    while(tt--){
+        pto a;
+        cin >> a.x >> a.y;
+        puntos.push_back(a);
+    }
+
+    vector<pto> convex = CH(puntos);
+    cout << convex.size() << endl;
+    for(auto i: convex){
+        cout << i.x << " " << i.y << endl;
+    }
+
+    return 0;
 }

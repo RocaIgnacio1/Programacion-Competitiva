@@ -17,9 +17,19 @@ int main(){
     cout.tie(NULL);
     
     int tt;
-    cin >> tt;
+    tt=1;
     while(tt--){
-       
+        int n;
+        cin >> n;
+        vector<string> iman(n);
+        forn(i,n){
+            cin >> iman[i];
+        }
+        int ans=1;
+        forr(i,1,n){
+            if(iman[i][0]==iman[i-1][1])ans++;
+        }
+        cout << ans << endl;
     }
 
     return 0;

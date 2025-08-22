@@ -8,6 +8,10 @@ using namespace std;
 #define forall(it, v) for (auto it = v.begin(); it != v.end(); it++)
 #define MAXN 200000
 
+bool check(ll num, vector<ll> &a){
+
+}
+
 int main(){
     #ifdef EBUG
         freopen("input.txt", "r", stdin);
@@ -16,10 +20,31 @@ int main(){
     cin.tie(NULL);
     cout.tie(NULL);
     
-    int tt;
-    cin >> tt;
-    while(tt--){
-       
+    int n;
+    cin >> n;
+    vector<ll> a(n);
+    ll s=0;
+    forn(i,n){
+        ll val;
+        cin >> val;
+        s+=val;
+        a[i] = s;
+    }
+
+    int m;
+    cin >> m;
+
+    forn(i,m){
+        ll p;
+        cin >> p;
+        int l=-1, r=a.size()-1;
+        while((r-l)>1){
+            int mid = (l+r)/2;
+            if(p>a[mid]){
+                l=mid;
+            }else r=mid;
+        }
+        cout << r+1 << endl;
     }
 
     return 0;

@@ -16,10 +16,20 @@ int main(){
     cin.tie(NULL);
     cout.tie(NULL);
     
-    int tt;
-    cin >> tt;
-    while(tt--){
-       
+    int n;
+    cin >> n;
+    forn(i,n){
+        ll a,b,c;
+        cin >> a >> b >> c;
+        ll p = min(a,min(b,c));
+        
+        a-=p;
+        b-=p;
+        if(a+b>=3 && a>0 && b>0){
+            p+= min((a+b)/3,min(a,b));
+        }
+
+        cout << p << endl;
     }
 
     return 0;

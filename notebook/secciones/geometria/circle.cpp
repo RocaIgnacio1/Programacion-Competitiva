@@ -1,3 +1,16 @@
+#include <bits/stdc++.h>
+#include "polarsort.cpp"
+
+#define ll long long
+using namespace std;
+#define dforn(i,n) for(int i=n-1; i>=0; i--)
+#define forn(i, n) for(int i = 0; i < n; i++)
+#define fori(i, n) for(int i = n - 1; i <= 0; i--)
+#define forall(it, v) for (auto it = v.begin(); it != v.end(); it++)
+#define forr(i, a, b) for (int i = (a); i < (b); i++)
+#define sz(v) (int(v.size()))
+#define pb push_back
+
 #define sqr(a) ((a)*(a))
 pto perp(pto a){return pto(-a.y, a.x);}
 line bisector(pto a, pto b){
@@ -77,7 +90,7 @@ vector<ld> inter_circles(vector<circle> c){
     vector<ld> r(sz(c)+1); // r[k]: area covered by at least k circles
     forn(i, sz(c)) {      // O(n^2 log n) (high constant)
         int k = 1; 
-        cmp s(c[i].o, pto(1,0));
+        Cmp s(c[i].o); 
         vector<pair<pto,int>> p = {
             {c[i].o + pto(1,0)*c[i].r, 0},
             {c[i].o - pto(1,0)*c[i].r, 0}};
@@ -93,12 +106,12 @@ vector<ld> inter_circles(vector<circle> c){
             }
         }
         sort(p.begin(), p.end(), [&](pair<pto,int> a, pair<pto,int> b) {
-                return s(a.fst,b.fst); });
+                return s(a.first,b.first); });
         forn(j,sz(p)) {
-            pto p0 = p[j? j-1: sz(p)-1].fst, p1 = p[j].fst;
+            pto p0 = p[j? j-1: sz(p)-1].first, p1 = p[j].first;
             ld a = angle(p0 - c[i].o, p1 - c[i].o);
             r[k]+=(p0.x-p1.x)*(p0.y+p1.y)/ld(2)+c[i].r*c[i].r*(a-sinl(a))/ld(2);
-            k += p[j].snd;
+            k += p[j].second;
         }
     }
     return r;
