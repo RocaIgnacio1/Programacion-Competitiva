@@ -38,6 +38,37 @@ $\sum_{i=0}^n i^p = \frac{(n+1)^{p+1}}{p+1} + \sum_{k=1}^p\frac{B_k}{p-k+1}{p\ch
 10! =	3.628.800     & 21! =	51.090.942.171.709.400.000
 \end{tabular}
 
+\newpage
+\subsection{Propiedades de Exponentes y Logaritmos}
+
+\subsubsection{1. Exponentes}
+\begin{itemize}
+    \item Producto de potencias con misma base: 
+    \[
+    a^b \cdot a^c = a^{b+c}
+    \]
+    \item Potencia de una potencia:
+    \[
+    (a^b)^c = a^{b \cdot c}
+    \]
+\end{itemize}
+
+\subsubsection{2. Logaritmos}
+\begin{itemize}
+    \item Logaritmo de un producto:
+    \[
+    \log(ab) = \log a + \log b
+    \]
+    \item Logaritmo de una potencia:
+    \[
+    \log(a^b) = b \log a
+    \]
+    \item Logaritmo de un cociente:
+    \[
+    \log\left(\frac{a}{b}\right) = \log a - \log b
+    \]
+\end{itemize}
+
 %\subsubsection{
 \paragraph{Primos} \ \\
 2 3 5 7 11 13 17 19 23 29
@@ -109,6 +140,35 @@ Son aquellos números enteros \(a\) y \(b\) cuyo único factor en común que tie
 \lstinputlisting[language=C++]{secciones/math/primos.cpp}
 
 \subsection{Combinatoria}
-\lstinputlisting[language=C++]{secciones/math/combinatoria.cpp}
+** Permutaciones ** \\
+el orden importa \\
+¿Cuantas formas hay de ordenar n elementos? \\
+$$
+P(n) = n!
+$$
+
+** Permutaciones tomadas de a r ** \\
+El número de permutaciones de n elementos tomados de r en r se calcula con la siguiente fórmula: 
+$$
+P(n, r) = \frac{n!}{(n-r)!}
+$$ 
+Si tienes 3 objetos diferentes (n=3) y quieres formar arreglos de 2 objetos
+(k=2), las k-permutaciones serían: \\
+    Objetos: \{A, B, C\} \\
+    Arreglos de k=2: \{AB, BA, AC, CA, BC, CB\} \\
+
+** Combinaciones ** \\
+Cuántas formas hay de elegir k elementos entre n posibles? \\
+$$ 
+C\begin{pmatrix}
+n \\
+k
+\end{pmatrix}
+= \frac{n!}{k!.(n-k)!}
+$$
+\subsection{Operaciones con modulo}
+\lstinputlisting[language=C++]{secciones/math/mod.cpp}
 
 \newpage
+
+

@@ -18,8 +18,6 @@ sort(v.begin(), v.end(), sortbysec);
 \begin{lstlisting}[language=C++]
 cout << fixed << setprecision(20) << ans << endl;
 \end{lstlisting}
-\subsection{Longest increasing subsequence}
-\lstinputlisting[language=C++]{secciones/utils/lis.cpp}
 \subsection{Prev permutation}
 \lstinputlisting[language=C++]{secciones/utils/prevpermutation.cpp}
 \subsection{MO}
@@ -32,6 +30,40 @@ Nros primos hasta maxp
 \subsection{Subconjuntos}
 Subconjuntos distintos de un conjunto
 \lstinputlisting[language=C++]{secciones/utils/Subconjuntos.cpp}
+
+\subsection{Propiedades del Bitwise XOR ($\oplus$)}
+\begin{enumerate}
+    \item \textbf{Identidad:} 
+    \[
+    a \oplus 0 = a
+    \]
+
+    \item \textbf{Autoinversión:} 
+    \[
+    a \oplus a = 0
+    \]
+
+    \item \textbf{Conmutativa:} 
+    \[
+    a \oplus b = b \oplus a
+    \]
+
+    \item \textbf{Asociativa:} 
+    \[
+    (a \oplus b) \oplus c = a \oplus (b \oplus c)
+    \]
+
+    \item \textbf{Autoeliminación:} 
+    \[
+    a \oplus a \oplus b = 0 \oplus b = b
+    \]
+
+    \item \textbf{Uso práctico: Encontrar elemento único} \\
+    Si todos los elementos de un conjunto aparecen dos veces excepto uno:
+    \[
+    x_1 \oplus x_2 \oplus \dots \oplus x_n = \text{elemento único}
+    \]
+\end{enumerate}
 
 \newpage
 
