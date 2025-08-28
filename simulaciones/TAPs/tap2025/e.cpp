@@ -11,7 +11,7 @@ typedef long long ll;
 typedef pair<int, int> ii;
 
 
-#define MAXN 200000
+#define MAXN 600005
 #define operacion(x, y) min(x, y)
 #define neutro make_pair(1e9+10, -1)
 #define tipo pair<int, int> 
@@ -43,44 +43,59 @@ struct RMQ{
     }
 }mn;
 
+struct tres{
+    ll uno;
+    ll dos;
+    ll tres;
+};
 
-vector<int> pesos;
-vector<vector<int>> sumProf;
+
+vector<ll> pesos;
+vector<vector<tres>> sumProf;
 vector<vector<int>> adj;
-bool visitado[100005];
-bool visited[100005];
+bool visitado[200005];
+bool visited[200005];
 vector<int> arbolAplanado, niveles, valores;
+tres res;
 
-void dfs(int n, int nivel){
+void dfs(int n, int nivel, int col){
     if(visitado[n]) return;
     visitado[n] = true;
     //cout << n << " " << nivel << endl;
-    if(nivel > sumProf.size()) sumProf.push_back({0, -1, 0});
+    if(nivel > sumProf[col].size()) sumProf[col].push_back({0, -1, 0});
     //cout << sumProf.size() << endl;
     if(pesos[n-1] > 0){
         //cout << "hola " << n << endl;
-        vector<int> aux(3);
-        //cout << aux[0] << endl;
-        aux[0] = sumProf[nivel-1][0] + pesos[n-1];
-        if(sumProf[nivel-1][1]!=-1){
-            pair<int, int> minimo = mn.get(arbolAplanado[sumProf[nivel-1][1]], arbolAplanado[n]+1);
+        tres aux;
+        //cout << aux.uno << endl;
+        aux.uno = sumProf[col][nivel-1].uno + pesos[n-1];
+        if(sumProf[col][nivel-1].dos!=-1){
+            int a = min (arbolAplanado[sumProf[col][nivel-1].dos], arbolAplanado[n]);
+            int b = max (arbolAplanado[sumProf[col][nivel-1].dos], arbolAplanado[n]);
+            pair<int, int> minimo = mn.get(a,b+1);
             //cout << "--" << n << " " << nivel << endl;
             //cout << "|" << minimo.first << " " << minimo.second << endl;
-            aux[1] = minimo.second;
-            aux[2] = nivel - minimo.first;
+            aux.dos = minimo.second;
+            aux.tres = nivel - minimo.first;
         }else{
-            aux[1] = n;
-            aux[2] = 0;
+            aux.dos = n;
+            aux.tres = 0;
         }
-        sumProf[nivel-1] = aux;
-        //cout << sumProf[nivel-1][0] << " " << sumProf[nivel-1][1] << " " << sumProf[nivel-1][2] << endl;
+        sumProf[col][nivel-1] = aux;
+        if(sumProf[col][nivel-1].uno == res.uno && sumProf[col][nivel-1].tres < res.tres){
+                res = sumProf[col][nivel-1];
+        }
+        if(sumProf[col][nivel-1].uno > res.uno){
+            res = sumProf[col][nivel-1];
+        }
+        //cout << sumProf[nivel-1].uno << " " << sumProf[nivel-1].dos << " " << sumProf[nivel-1].tres << endl;
     }
     forn(i, adj[n].size()){
-        dfs(adj[n][i], nivel+1);
+        dfs(adj[n][i], nivel+1, col);
     }
     return;
 }
-void setSt(int n, int lvl){
+void setSt(ll n, ll lvl){
     if(visited[n]) return;
     visited[n] = true;
     arbolAplanado[n] = niveles.size();
@@ -101,7 +116,7 @@ int main() {
     adj.assign(n, {});
     arbolAplanado.assign(n, -1);
     forn(i, n-1){
-        int k;
+        ll k;
         cin >> k;
         pesos.push_back(k);
     }
@@ -119,23 +134,12 @@ int main() {
     }
     mn.updall();
     visitado[0] = true;
-    vector<int> res = {0,0,0};
     forn(i, adj[0].size()){
-        sumProf.clear();
-        dfs(adj[0][i], 1);
-
-        forn(j, sumProf.size()){
-            if(sumProf[j][0] == res[0] && sumProf[j][2] < res[2]){
-                res = sumProf[j];
-            }
-            if(sumProf[j][0] > res[0]){
-                res = sumProf[j];
-            }
-            //cout << sumProf[j][0] << " " << sumProf[j][1] << " " << sumProf[j][2] << " " << endl;
-        }
+        sumProf.push_back({});
+        dfs(adj[0][i], 1, i);
     }
 
-    cout << res[0] << " " << res[2] + 1 << endl;
+    cout << res.uno << " " << res.tres + 1 << endl;
 
     return 0;
 }
