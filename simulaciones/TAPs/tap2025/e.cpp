@@ -11,7 +11,7 @@ typedef long long ll;
 typedef pair<int, int> ii;
 
 
-#define MAXN 600005
+#define MAXN 524300
 #define operacion(x, y) min(x, y)
 #define neutro make_pair(1e9+10, -1)
 #define tipo pair<int, int> 
