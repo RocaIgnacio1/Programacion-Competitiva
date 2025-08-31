@@ -18,7 +18,7 @@ int main() {
     reverse(v.begin(), v.end());
     forn(i, n) cant[(i+n-(v[i]-1))%n]++;
     ll acum = 0;
-    forn(i, n)acum += (cant[i] * cant[i]);
+    forn(i, n)acum += ((ll)cant[i] * (ll)cant[i]);
     cout << acum << endl;
     return 0;
 }
